@@ -46,16 +46,29 @@ public class Index {
             FileWriter writer = new FileWriter(indexFile);
             StringBuilder str = new StringBuilder();
             for (String hash : this.index.keySet()) {
-                str.append(hash + " ");
+                str.append(hash + " : ");
                 for (String fileName : this.index.get(hash)) {
-                    str.append(fileName + " ");
+                    str.append(fileName + ", ");
                 }
+                str.delete(str.length() - 2, str.length());
                 str.append("\n");
             }
             writer.write(str.toString());
             writer.close();
         } catch (Exception e) {
             System.out.println("cant create Index.txt");
+        }
+    }
+
+    public void remove(String fileName) {
+        File file = new File(fileName);
+        Blob blob = new Blob(file);
+        String hash = blob.hash;
+        if (index.containsKey(hash)) {
+            index.get(hash).remove(fileName);
+            if (index.get(hash).isEmpty()) {
+                index.remove(hash);
+            }
         }
     }
 }

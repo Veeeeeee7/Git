@@ -1,4 +1,5 @@
-868c9f41ea7dd3b8758b0a0db220f0bf6ecf29d4 README.md 
-ec3417c2bb9e602ad7ec9232363370420551d3ba Index.java 
-f3d408300f81c3f05f4f90f5e96dd24a226cf097 Tester.java 
-510ddc80b25d98515cba113a0f0a0b9eb4df2f1e Blob.java 
+868c9f41ea7dd3b8758b0a0db220f0bf6ecf29d4 : README.md
+6c834d62d7524442cdd32ab209c9b2c083c0a474 : BOB.txt, BOBBY.txt
+b77ce18027e23f56ba86bf545f3718bce3a6bd49 : Index.java
+d3af9fe6a9807c5a85b1d12e31c73eeca20c4633 : Tester.java
+510ddc80b25d98515cba113a0f0a0b9eb4df2f1e : Blob.java

@@ -1,4 +1,5 @@
 import java.io.File;
+import java.io.FileWriter;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.util.Scanner;
@@ -45,6 +46,20 @@ public class Blob {
             System.out.println("Error in hashing");
         }
         return null;
+    }
+
+    public void createBlob() {
+        try {
+            File blob = new File("Objects/" + hash);
+            if (!blob.exists()) {
+                blob.createNewFile();
+            }
+            FileWriter writer = new FileWriter(blob);
+            writer.write(fileContents);
+            writer.close();
+        } catch (Exception e) {
+            System.out.println("cant create blob file");
+        }
     }
 
 }

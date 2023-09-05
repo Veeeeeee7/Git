@@ -28,6 +28,7 @@ public class Index {
             File file = new File(fileNames[i]);
             Blob blob = new Blob(file);
             String hash = blob.hash;
+            blob.createBlob();
             if (index.containsKey(hash)) {
                 index.get(hash).push(fileNames[i]);
             } else {
@@ -39,7 +40,7 @@ public class Index {
 
         try {
             File indexFile = new File("Index.txt");
-            if (!File.createTempFile("Index", ".txt").exists()) {
+            if (!indexFile.exists()) {
                 indexFile.createNewFile();
             }
             FileWriter writer = new FileWriter(indexFile);

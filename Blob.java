@@ -1,16 +1,15 @@
 import java.io.File;
-import java.io.FileWriter;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.util.Scanner;
 
 public class Blob {
-    protected String fileName;
+    protected File file;
     protected String fileContents;
     protected String hash;
 
-    public Blob(String fileName) {
-        this.fileName = fileName;
+    public Blob(File file) {
+        this.file = file;
         this.fileContents = getContents();
         this.hash = getHash();
     }
@@ -18,7 +17,6 @@ public class Blob {
     private String getContents() {
         try {
             StringBuilder contents = new StringBuilder();
-            File file = new File(fileName);
             Scanner scanner = new Scanner(file);
             while (scanner.hasNextLine()) {
                 contents.append(scanner.nextLine());

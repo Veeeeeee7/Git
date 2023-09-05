@@ -11,10 +11,11 @@ public class Blob {
 
     public Blob(String fileName) {
         this.fileName = fileName;
-        this.fileContents = getContent();
+        this.fileContents = getContents();
+        this.hash = getHash();
     }
 
-    private String getContent() {
+    private String getContents() {
         try {
             StringBuilder contents = new StringBuilder();
             File file = new File(fileName);
@@ -29,6 +30,23 @@ public class Blob {
         }
         return null;
 
+    }
+
+    private String getHash() {
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA-1");
+            byte[] messageDigest = md.digest(fileContents.getBytes());
+            BigInteger no = new BigInteger(1, messageDigest);
+            String hashtext = no.toString(16);
+
+            while (hashtext.length() < 32) {
+                hashtext = "0" + hashtext;
+            }
+            return hashtext;
+        } catch (Exception e) {
+            System.out.println("Error in hashing");
+        }
+        return null;
     }
 
 }

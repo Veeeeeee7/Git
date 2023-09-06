@@ -3,6 +3,8 @@ import java.io.FileWriter;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.util.Scanner;
+import java.io.ByteArrayOutputStream;
+import java.util.zip.GZIPOutputStream;
 
 public class Blob {
     protected File file;
@@ -50,16 +52,30 @@ public class Blob {
 
     public void createBlob() {
         try {
+            String compressed = compress();
             File blob = new File("Objects/" + hash);
             if (!blob.exists()) {
                 blob.createNewFile();
             }
             FileWriter writer = new FileWriter(blob);
-            writer.write(fileContents);
+            writer.write(compressed);
             writer.close();
         } catch (Exception e) {
             System.out.println("cant create blob file");
         }
+    }
+
+    private String compress() {
+        try {
+            ByteArrayOutputStream out = new ByteArrayOutputStream();
+            GZIPOutputStream gzip = new GZIPOutputStream(out);
+            gzip.write(fileContents.getBytes());
+            gzip.close();
+            return out.toString("ISO-8859-1");
+        } catch (Exception e) {
+            System.out.println("cant compress");
+        }
+        return null;
     }
 
 }

@@ -10,8 +10,7 @@ public class Index {
 
     public Index() {
         index = new HashMap<String, Stack<String>>();
-        File folder = new File(System.getProperty("user.dir"));
-        System.out.println(folder.getAbsolutePath());
+        File folder = new File(".");
         fileNames = folder.list(new FilenameFilter() {
             @Override
             public boolean accept(File file, String name) {

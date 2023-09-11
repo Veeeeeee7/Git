@@ -7,6 +7,7 @@ import java.util.Stack;
 public class Index {
     protected String[] fileNames;
     protected HashMap<String, Stack<String>> index;
+    protected StringBuilder content = new StringBuilder();
 
     public Index() {
         index = new HashMap<String, Stack<String>>();
@@ -43,16 +44,16 @@ public class Index {
                 indexFile.createNewFile();
             }
             FileWriter writer = new FileWriter(indexFile);
-            StringBuilder str = new StringBuilder();
+            // StringBuilder str = new StringBuilder();
             for (String hash : this.index.keySet()) {
-                str.append(hash + " : ");
+                content.append(hash + " : ");
                 for (String fileName : this.index.get(hash)) {
-                    str.append(fileName + ", ");
+                    content.append(fileName + ", ");
                 }
-                str.delete(str.length() - 2, str.length());
-                str.append("\n");
+                content.delete(content.length() - 2, content.length());
+                content.append("\n");
             }
-            writer.write(str.toString());
+            writer.write(content.toString());
             writer.close();
         } catch (Exception e) {
             System.out.println("cant create Index.txt");
@@ -68,6 +69,30 @@ public class Index {
             if (index.get(hash).isEmpty()) {
                 index.remove(hash);
             }
+        }
+    }
+
+    public void add(String fileName) {
+        File file = new File(fileName);
+        Blob blob = new Blob(file);
+        String hash = blob.hash;
+        blob.createBlob();
+        if (index.containsKey(hash)) {
+            index.get(hash).push(fileName);
+            content.insert(content.indexOf(index.get(hash).peek()), " , " + fileName);
+        } else {
+            Stack<String> stack = new Stack<String>();
+            stack.push(fileName);
+            index.put(hash, stack);
+            content.append(hash + " : " + fileName + "\n");
+        }
+
+        try {
+            File indexFile = new File("Index.txt");
+            FileWriter writer = new FileWriter(indexFile);
+            writer.write(content.toString());
+        } catch (Exception e) {
+            System.out.println("cant create Index.txt");
         }
     }
 }

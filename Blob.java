@@ -33,7 +33,7 @@ public class Blob {
 
     }
 
-    private String getHash() {
+    public String getHash() {
         try {
             MessageDigest md = MessageDigest.getInstance("SHA-1");
             byte[] messageDigest = md.digest(fileContents.getBytes());

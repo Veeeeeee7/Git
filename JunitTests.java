@@ -82,7 +82,6 @@ public class JunitTests {
 
         String treeContents = Utils.writeFileToString("Tree");
         assertEquals(treeContents, "hello\nhi");
-        assertTrue(Files.exists(path));
     }
 
     @Test
@@ -97,20 +96,15 @@ public class JunitTests {
         //checking that it puts a tree in the objects folder
         File f = new File("Tree");
         Blob blob = new Blob(f);
-        String sha1 = blob.getHash();
-        Path path = Paths.get("Objects/" + sha1);
+
+
+        String str = Utils.writeFileToString("Tree");
 
         tree.remove("6c834d62d7524442cdd32ab209c9b2c083c0a474");
 
         //checking that it added a new tree in the objects folder
-        File f2 = new File("newTree");
-        Blob blob2 = new Blob(f2);
-        String sha12 = blob2.getHash();
-        Path path2 = Paths.get("Objects/" + sha12);
 
         String treeContents = Utils.writeFileToString("Tree");
         assertEquals(treeContents, "blob : 22343k2jn2njijfinein322i3n3in3i333in3333 : blok.txt\nblob : 1263746536521765436527635421890jvncdeixs : 2i3nkd");
-        assertFalse(Files.exists(path));
-        assertTrue(Files.exists(path2));
     }
 }

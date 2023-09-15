@@ -23,18 +23,16 @@ public class Tree {
     }
 
     public void add (String str) throws FileNotFoundException, IOException {
-        FileWriter fw = new FileWriter(f, true);
+        FileWriter fw = new FileWriter("Tree", true);
         if(filled) {
-            fw.write("\n" + str);
+            String s = '\n' + str;
+            fw.write(s);
         }
-        else
+        else {
             fw.write(str);
             filled = true;
+        }
         fw.close();
-
-        Index ind = new Index();
-        ind.remove("Tree");
-        finalize();
     }
 
     public void remove(String sha1) throws FileNotFoundException, IOException {
@@ -51,8 +49,10 @@ public class Tree {
             if(!check.equals(sha1)) {
                 if(sb.toString().equals(""))
                     sb.append(line);
-                else
-                    sb.append("\n" + line);
+                else {
+                    String s = '\n' + line;
+                    sb.append(s);
+                }
             }
             else{
                 filename = line.substring(i+44);
@@ -63,10 +63,6 @@ public class Tree {
         pw.print(sb);
         pw.close();
         br.close();
-
-        Index ind = new Index();
-        ind.remove("Tree");
-        finalize();
     }
 
     public void finalize() {

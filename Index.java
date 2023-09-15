@@ -91,6 +91,7 @@ public class Index {
             File indexFile = new File("Index.txt");
             FileWriter writer = new FileWriter(indexFile);
             writer.write(content.toString());
+            writer.close();
         } catch (Exception e) {
             System.out.println("cant create Index.txt");
         }

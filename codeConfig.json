@@ -92,5 +92,54 @@
             }
 
         ]
+    },
+    {
+        "className": "Utils",
+        "constructorConfigs": [
+            {
+                "parameters": [],
+                "values": []
+            }
+        ],
+        "methodConfigs": [
+            {
+                "methodName": "writeStringToFile",
+                "parameters": [
+                    "String",
+                    "String"
+                ],
+                "values": [
+                    "filename",
+                    "str"
+                ]
+            },
+            {
+                "methodName": "writeStringToFile",
+                "parameters": [
+                    "String"
+                ],
+                "values": [
+                    "f"
+                ]
+            },
+            {
+                "methodName": "deleteFile",
+                "parameters": [
+                    "String"
+                ],
+                "values": [
+                    "f"
+                ]
+            },
+            {
+                "methodName": "deleteDirectory",
+                "parameters": [
+                    "String"
+                ],
+                "values": [
+                    "f"
+                ]
+            }
+        ]
     }
 ]

@@ -25,7 +25,6 @@ public class Blob {
                 contents.append(scanner.nextLine());
             }
             return contents.toString();
-
         } catch (Exception e) {
             System.out.println("File doesnt exist");
         }

@@ -1,6 +1,11 @@
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.FilenameFilter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Stack;
 
@@ -60,19 +65,31 @@ public class Index {
         }
     }
 
-    public void remove(String fileName) {
-        File file = new File(fileName);
-        Blob blob = new Blob(file);
-        String hash = blob.hash;
-        if (index.containsKey(hash)) {
-            index.get(hash).remove(fileName);
-            if (index.get(hash).isEmpty()) {
-                index.remove(hash);
-            }
+    public void remove(String fileName) throws IOException {
+        StringBuilder sb = new StringBuilder();
+        BufferedReader br = new BufferedReader(new FileReader("Index.txt"));
+        String filename = "";
+
+        while(br.ready()) {
+            String line = br.readLine();
+            String check = "";
+            check = line.substring(43);
+            if(!check.equals(fileName)) {
+                if(sb.toString().equals(""))
+                    sb.append(line);
+                else {
+                    String s = '\n' + line;
+                    sb.append(s);
+                }
+            } 
         }
+        PrintWriter pw = new PrintWriter("Index.txt");
+        pw.print(sb);
+        pw.close();
+        br.close();
     }
 
-    public void add(String fileName) {
+    public void add(String fileName) throws IOException {
         File file = new File(fileName);
         Blob blob = new Blob(file);
         String hash = blob.hash;
@@ -91,8 +108,48 @@ public class Index {
             File indexFile = new File("Index.txt");
             FileWriter writer = new FileWriter(indexFile);
             writer.write(content.toString());
+            writer.close();
         } catch (Exception e) {
             System.out.println("cant create Index.txt");
         }
+        removeNewLine();
+    }
+
+    public void removeNewLine() throws IOException {
+        StringBuilder sb = new StringBuilder();
+        BufferedReader br = new BufferedReader(new FileReader("Index.txt"));
+
+        while(br.ready()) {
+            char c = (char) br.read();
+            if(br.ready())
+                sb.append(c);
+            else
+                break;
+        }
+
+        FileWriter fw = new FileWriter("Index.txt");
+        fw.write(sb.toString());
+        fw.close();
+    }
+
+    public void removeIndex() throws IOException {
+        try {
+            FileWriter writer = new FileWriter("Index.txt");
+            // StringBuilder str = new StringBuilder();
+            for (String hash : this.index.keySet()) {
+                content.append(hash + " : ");
+                for (String fileName : this.index.get(hash)) {
+                    content.append(fileName + ", ");
+                }
+                content.delete(content.length() - 2, content.length());
+                content.append("\n");
+            }
+            writer.write(content.toString());
+            writer.close();
+        } catch (Exception e) {
+            System.out.println("cant create Index.txt");
+        }
+        
     }
 }
+

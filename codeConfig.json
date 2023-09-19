@@ -1,0 +1,145 @@
+[
+    {
+        "className": "Blob",
+        "constructorConfigs": [
+            {
+                "parameters": [
+                    "File"
+                ],
+                "values": [
+                    "file"
+                ]
+            }
+        ],
+        "methodConfigs": [
+            {
+                "methodName": "getContents",
+                "parameters": [],
+                "values": []
+            },
+            {
+                "methodName": "getHash",
+                "parameters": [],
+                "values": []
+            },
+            {
+                "methodName": "createBlob",
+                "parameters": [],
+                "values": []
+            }
+        ]
+    },
+    {
+        "className": "Index",
+        "constructorConfigs": [
+            {
+                "parameters": [],
+                "values": []
+            }
+        ],
+        "methodConfigs": [
+            {
+                "methodName": "init",
+                "parameters": [],
+                "values": []
+            },
+            {
+                "methodName": "add",
+                "parameters": [
+                    "String"
+                ],
+                "values": [
+                    "fileName"
+                ]
+            },
+            {
+                "methodName": "remove",
+                "parameters": [
+                    "String"
+                ],
+                "values": [
+                    "fileName"
+                ]
+            }
+        ]
+    },
+    {
+        "className": "Tree",
+        "constructorConfigs": [
+            {
+                "parameters": [],
+                "values": []
+            }
+        ],
+        "methodConfigs": [
+            {
+                "methodName": "add",
+                "parameters": [
+                    "String"
+                ],
+                "value": [
+                    "str"
+                ]
+            },
+            {
+                "methodName": "remove",
+                "parameters": [
+                    "String"
+                ],
+                "values": [
+                    "sha1"
+                ]
+            }
+
+        ]
+    },
+    {
+        "className": "Utils",
+        "constructorConfigs": [
+            {
+                "parameters": [],
+                "values": []
+            }
+        ],
+        "methodConfigs": [
+            {
+                "methodName": "writeStringToFile",
+                "parameters": [
+                    "String",
+                    "String"
+                ],
+                "values": [
+                    "filename",
+                    "str"
+                ]
+            },
+            {
+                "methodName": "writeStringToFile",
+                "parameters": [
+                    "String"
+                ],
+                "values": [
+                    "f"
+                ]
+            },
+            {
+                "methodName": "deleteFile",
+                "parameters": [
+                    "String"
+                ],
+                "values": [
+                    "f"
+                ]
+            },
+            {
+                "methodName": "deleteDirectory",
+                "parameters": [
+                    "String"
+                ],
+                "values": [
+                    "f"
+                ]
+            }
+        ]
+    }
+]

@@ -25,7 +25,6 @@ public class Blob {
                 contents.append(scanner.nextLine());
             }
             return contents.toString();
-
         } catch (Exception e) {
             System.out.println("File doesnt exist");
         }
@@ -33,7 +32,7 @@ public class Blob {
 
     }
 
-    private String getHash() {
+    public String getHash() {
         try {
             MessageDigest md = MessageDigest.getInstance("SHA-1");
             byte[] messageDigest = md.digest(fileContents.getBytes());

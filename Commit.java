@@ -24,7 +24,7 @@ public class Commit {
         this.parentCommit = parentCommit;
         this.summary = summary;
         this.author = author;
-        
+        createTree();
     }
 
     public void createCommit() throws IOException
@@ -38,7 +38,7 @@ public class Commit {
         file.delete();
     }
 
-    public File createFile() throws IOException
+    private File createFile() throws IOException
     {
         File file = new File("temp");
         PrintWriter pw = new PrintWriter(new FileWriter("temp", false));
@@ -47,7 +47,7 @@ public class Commit {
         return file;
     }
 
-    public void createTree()
+    private void createTree()
     {
         Tree tree = new Tree();
         treeSHA1 = tree.getSHA1();
@@ -68,7 +68,7 @@ public class Commit {
     public String getDate()
     {
         Date date = Calendar.getInstance().getTime();
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
+        DateFormat dateFormat = new SimpleDateFormat("YYYY-MM-dd");
         System.out.println(dateFormat.format(date));
         return dateFormat.format(date);
         

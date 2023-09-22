@@ -52,7 +52,7 @@ public class Blob {
     public void createBlob() {
         try {
             // String compressed = compress();
-            File blob = new File("Objects/" + hash);
+            File blob = new File("objects/" + hash);
             if (!blob.exists()) {
                 blob.createNewFile();
             }

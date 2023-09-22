@@ -27,7 +27,7 @@ public class Index {
     }
 
     public void init() {
-        File objects = new File("Objects");
+        File objects = new File("objects");
         objects.mkdir();
         for (int i = 0; i < fileNames.length; i++) {
             File file = new File(fileNames[i]);

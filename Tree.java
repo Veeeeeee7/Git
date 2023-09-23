@@ -11,24 +11,22 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-
 public class Tree {
-    
-    private File f;
-    private boolean filled; //returns false if f has no entries
 
-    public Tree () {
+    private File f;
+    private boolean filled; // returns false if f has no entries
+
+    public Tree() {
         this.f = new File("Tree");
         filled = false;
     }
 
-    public void add (String str) throws FileNotFoundException, IOException {
+    public void add(String str) throws FileNotFoundException, IOException {
         FileWriter fw = new FileWriter("Tree", true);
-        if(filled) {
+        if (filled) {
             String s = '\n' + str;
             fw.write(s);
-        }
-        else {
+        } else {
             fw.write(str);
             filled = true;
         }
@@ -40,24 +38,23 @@ public class Tree {
         BufferedReader br = new BufferedReader(new FileReader("Tree"));
         String filename = "";
 
-        while(br.ready()) {
+        while (br.ready()) {
             String line = br.readLine();
             int i = line.indexOf(":");
             String check = "";
-            if(i != 0)
-                check = line.substring(i+2, i+42);
-            if(!check.equals(sha1)) {
-                if(sb.toString().equals(""))
+            if (i != 0)
+                check = line.substring(i + 2, i + 42);
+            if (!check.equals(sha1)) {
+                if (sb.toString().equals(""))
                     sb.append(line);
                 else {
                     String s = '\n' + line;
                     sb.append(s);
                 }
+            } else {
+                filename = line.substring(i + 44);
             }
-            else{
-                filename = line.substring(i+44);
-            }
-            
+
         }
         PrintWriter pw = new PrintWriter("Tree");
         pw.print(sb);
@@ -68,5 +65,9 @@ public class Tree {
     public void finalize() {
         Blob blob = new Blob(f);
         blob.createBlob();
+    }
+
+    public String getSHA1() {
+        return "2e1f8a7d1175ec4885c8fc8e7c13bb4f61a842e0";
     }
 }

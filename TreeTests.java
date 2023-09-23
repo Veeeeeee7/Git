@@ -12,20 +12,20 @@ import org.junit.jupiter.api.Test;
 public class TreeTests {
     @BeforeAll
     static void setUpBeforeClass() throws Exception {
-        
-         Utils.writeStringToFile("junit_example_file_data.txt", "test file contents");
-         Utils.deleteFile("Index.txt");
-         Utils.deleteDirectory("Objects");
-         Utils.deleteFile("Tree");
-         
+
+        Utils.writeStringToFile("junit_example_file_data.txt", "test file contents");
+        Utils.deleteFile("Index.txt");
+        Utils.deleteDirectory("Objects");
+        Utils.deleteFile("Tree");
+
     }
 
     @AfterAll
     static void tearDownAfterClass() throws Exception {
-         Utils.deleteFile("junit_example_file_data.txt");
-         Utils.deleteFile("Index.txt");
-         Utils.deleteDirectory("Objects");
-         Utils.deleteFile("Tree");
+        Utils.deleteFile("junit_example_file_data.txt");
+        Utils.deleteFile("Index.txt");
+        Utils.deleteDirectory("Objects");
+        Utils.deleteFile("Tree");
     }
 
     @Test
@@ -64,6 +64,7 @@ public class TreeTests {
         tree.remove("6c834d62d7524442cdd32ab209c9b2c083c0a474");
 
         String treeContents = Utils.writeFileToString("Tree");
-        assertEquals(treeContents, "blob : 22343k2jn2njijfinein322i3n3in3i333in3333 : blok.txt\nblob : 1263746536521765436527635421890jvncdeixs : 2i3nkd");
+        assertEquals(treeContents,
+                "blob : 22343k2jn2njijfinein322i3n3in3i333in3333 : blok.txt\nblob : 1263746536521765436527635421890jvncdeixs : 2i3nkd");
     }
 }

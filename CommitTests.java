@@ -11,13 +11,13 @@ import org.junit.jupiter.api.Test;
 
 public class CommitTests {
     Commit commit = new Commit("someParents", "author claire", "this is for testing");
+
     @Test
-    void testCreateCommit() throws IOException
-    {
+    void testCreateCommit() throws IOException {
         commit.createCommit();
         Path path = Paths.get("objects");
         assertTrue(Files.exists(path));
-        File file = new File("2e1f8a7d1175ec4885c8fc8e7c13bb4f61a842e0");
+        File file = new File("objects/5a1f5a7c2b9a1bed276bafb2b2f4c68842842a18");
         assertTrue(file.exists());
     }
 

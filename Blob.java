@@ -22,8 +22,9 @@ public class Blob {
             StringBuilder contents = new StringBuilder();
             Scanner scanner = new Scanner(file);
             while (scanner.hasNextLine()) {
-                contents.append(scanner.nextLine());
+                contents.append(scanner.nextLine() + "\n");
             }
+            contents.deleteCharAt(contents.length() - 1);
             return contents.toString();
         } catch (Exception e) {
             System.out.println("File doesnt exist");
@@ -65,17 +66,17 @@ public class Blob {
         }
     }
 
-    // private String compress() {
-    // try {
-    // ByteArrayOutputStream out = new ByteArrayOutputStream();
-    // GZIPOutputStream gzip = new GZIPOutputStream(out);
-    // gzip.write(fileContents.getBytes());
-    // gzip.close();
-    // return out.toString("ISO-8859-1");
-    // } catch (Exception e) {
-    // System.out.println("cant compress");
-    // }
-    // return null;
-    // }
+    private String compress() {
+        try {
+            ByteArrayOutputStream out = new ByteArrayOutputStream();
+            GZIPOutputStream gzip = new GZIPOutputStream(out);
+            gzip.write(fileContents.getBytes());
+            gzip.close();
+            return out.toString("ISO-8859-1");
+        } catch (Exception e) {
+            System.out.println("cant compress");
+        }
+        return null;
+    }
 
 }

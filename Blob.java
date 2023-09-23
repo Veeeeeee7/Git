@@ -45,7 +45,7 @@ public class Blob {
             }
             return hashtext;
         } catch (Exception e) {
-            System.out.println("Error in hashing");
+            System.out.println("Error in hashing blob");
         }
         return null;
     }

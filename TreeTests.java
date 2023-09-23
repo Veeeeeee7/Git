@@ -1,6 +1,7 @@
 import static org.junit.Assert.*;
 
 import java.io.*;
+import java.net.URISyntaxException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.Files;
@@ -8,6 +9,8 @@ import java.nio.file.Files;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+
+import Utilities.FileUtils;
 
 public class TreeTests {
     @BeforeAll
@@ -29,7 +32,7 @@ public class TreeTests {
     }
 
     @Test
-    void testAdd() throws IOException {
+    void testAdd() throws IOException, URISyntaxException {
         Tree tree = new Tree();
 
         tree.add("hello");
@@ -40,7 +43,7 @@ public class TreeTests {
     }
 
     @Test
-    void testFinalize() throws FileNotFoundException, IOException {
+    void testFinalize() throws Exception {
         Tree tree = new Tree();
 
         tree.add("blob : 6c834d62d7524442cdd32ab209c9b2c083c0a474 : BOB.txt");
@@ -54,7 +57,7 @@ public class TreeTests {
     }
 
     @Test
-    void testRemoveFromTree() throws FileNotFoundException, IOException {
+    void testRemoveFromTree() throws FileNotFoundException, IOException, URISyntaxException {
         Tree tree = new Tree();
 
         tree.add("blob : 6c834d62d7524442cdd32ab209c9b2c083c0a474 : BOB.txt");

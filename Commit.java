@@ -19,16 +19,14 @@ public class Commit {
     private String summary;
     private String author;
 
-    public Commit(String parentCommit, String author, String summary)
-    {
+    public Commit(String parentCommit, String author, String summary) throws Exception {
         this.parentCommit = parentCommit;
         this.summary = summary;
         this.author = author;
         createTree();
     }
 
-    public void createCommit() throws IOException
-    {
+    public void createCommit() throws IOException {
         createFile();
         File file = new File("temp");
         File path = new File("objects");
@@ -38,8 +36,7 @@ public class Commit {
         file.delete();
     }
 
-    private File createFile() throws IOException
-    {
+    private File createFile() throws IOException {
         File file = new File("temp");
         PrintWriter pw = new PrintWriter(new FileWriter("temp", false));
         pw.print(getContentWithoutThirdLine());
@@ -47,14 +44,12 @@ public class Commit {
         return file;
     }
 
-    private void createTree()
-    {
+    private void createTree() throws Exception {
         Tree tree = new Tree();
         treeSHA1 = tree.getSHA1();
     }
 
-    private String getContentWithoutThirdLine()
-    {
+    private String getContentWithoutThirdLine() {
         String content = "";
         content += treeSHA1 + "\n";
         content += parentCommit + "\n";
@@ -65,12 +60,11 @@ public class Commit {
         return content;
     }
 
-    public String getDate()
-    {
+    public String getDate() {
         Date date = Calendar.getInstance().getTime();
         DateFormat dateFormat = new SimpleDateFormat("YYYY-MM-dd");
         System.out.println(dateFormat.format(date));
         return dateFormat.format(date);
-        
+
     }
 }

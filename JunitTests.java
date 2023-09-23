@@ -3,6 +3,7 @@ import static org.junit.Assert.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -17,20 +18,20 @@ public class JunitTests {
 
     @BeforeAll
     static void setUpBeforeClass() throws Exception {
-        
-         Utils.writeStringToFile("junit_example_file_data.txt", "test file contents");
-         Utils.deleteFile("Index.txt");
-         Utils.deleteDirectory("Objects");
-         Utils.deleteFile("Tree");
-         
+
+        Utils.writeStringToFile("junit_example_file_data.txt", "test file contents");
+        Utils.deleteFile("Index.txt");
+        Utils.deleteDirectory("Objects");
+        Utils.deleteFile("Tree");
+
     }
 
     @AfterAll
     static void tearDownAfterClass() throws Exception {
-         Utils.deleteFile("junit_example_file_data.txt");
-         Utils.deleteFile("Index.txt");
-         Utils.deleteDirectory("Objects");
-         Utils.deleteFile("Tree");
+        Utils.deleteFile("junit_example_file_data.txt");
+        Utils.deleteFile("Index.txt");
+        Utils.deleteDirectory("Objects");
+        Utils.deleteFile("Tree");
     }
 
     @Test
@@ -69,7 +70,7 @@ public class JunitTests {
 
     @Test
     @DisplayName("Testing if add to tree works")
-    void testAddToTree() throws FileNotFoundException, IOException {
+    void testAddToTree() throws FileNotFoundException, IOException, URISyntaxException {
         Tree tree = new Tree();
 
         tree.add("hello");
@@ -86,25 +87,25 @@ public class JunitTests {
 
     @Test
     @DisplayName("Testing if remove from tree works")
-    void testRemoveFromTree() throws FileNotFoundException, IOException {
+    void testRemoveFromTree() throws FileNotFoundException, IOException, URISyntaxException {
         Tree tree = new Tree();
 
         tree.add("blob : 6c834d62d7524442cdd32ab209c9b2c083c0a474 : BOB.txt");
         tree.add("blob : 22343k2jn2njijfinein322i3n3in3i333in3333 : blok.txt");
         tree.add("blob : 1263746536521765436527635421890jvncdeixs : 2i3nkd");
 
-        //checking that it puts a tree in the objects folder
+        // checking that it puts a tree in the objects folder
         File f = new File("Tree");
         Blob blob = new Blob(f);
-
 
         String str = Utils.writeFileToString("Tree");
 
         tree.remove("6c834d62d7524442cdd32ab209c9b2c083c0a474");
 
-        //checking that it added a new tree in the objects folder
+        // checking that it added a new tree in the objects folder
 
         String treeContents = Utils.writeFileToString("Tree");
-        assertEquals(treeContents, "blob : 22343k2jn2njijfinein322i3n3in3i333in3333 : blok.txt\nblob : 1263746536521765436527635421890jvncdeixs : 2i3nkd");
+        assertEquals(treeContents,
+                "blob : 22343k2jn2njijfinein322i3n3in3i333in3333 : blok.txt\nblob : 1263746536521765436527635421890jvncdeixs : 2i3nkd");
     }
 }

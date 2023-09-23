@@ -1,8 +1,10 @@
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
+import Utilities.FileUtils;
+
 public class Tester {
-    public static void main(String[] args) throws FileNotFoundException, IOException {
+    public static void main(String[] args) throws Exception {
         // Index index = new Index();
         // index.init();
 
@@ -20,8 +22,10 @@ public class Tester {
 
         Tree tree = new Tree();
 
-        tree.add("blob : 6c834d62d7524442cdd32ab209c9b2c083c0a474 : BOB.txt");
+        // tree.add("blob : 6c834d62d7524442cdd32ab209c9b2c083c0a474 : BOB.txt");
 
-        tree.finalize();
+        // tree.finalize();
+        // System.out.println(tree.getSHA1());
+        tree.addDirectory("TestDirectory");
     }
 }

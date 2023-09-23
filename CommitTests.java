@@ -10,10 +10,10 @@ import java.nio.file.Paths;
 import org.junit.jupiter.api.Test;
 
 public class CommitTests {
-    Commit commit = new Commit("someParents", "author claire", "this is for testing");
 
     @Test
-    void testCreateCommit() throws IOException {
+    void testCreateCommit() throws Exception {
+        Commit commit = new Commit("someParents", "author claire", "this is for testing");
         commit.createCommit();
         Path path = Paths.get("objects");
         assertTrue(Files.exists(path));
@@ -22,7 +22,8 @@ public class CommitTests {
     }
 
     @Test
-    void testGetDate() {
+    void testGetDate() throws Exception {
+        Commit commit = new Commit("someParents", "author claire", "this is for testing");
         String actaul = commit.getDate();
         String expected = "2023-09-22";
         assertEquals(expected, actaul);

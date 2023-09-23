@@ -24,6 +24,9 @@ public class Blob {
             while (scanner.hasNextLine()) {
                 contents.append(scanner.nextLine() + "\n");
             }
+            if (contents.isEmpty()) {
+                return "";
+            }
             contents.deleteCharAt(contents.length() - 1);
             return contents.toString();
         } catch (Exception e) {

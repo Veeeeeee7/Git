@@ -81,9 +81,9 @@ public class Tree {
     }
 
     public String addDirectory(String folderName) throws Exception {
-        // if (FileUtils.fileExists(folderName)) {
-        // throw new Exception("Folder does not exist");
-        // }
+        if (!FileUtils.fileExists(folderName)) {
+            throw new Exception("Folder does not exist");
+        }
 
         Tree t = searchDirectory(folderName);
         t.finalize();

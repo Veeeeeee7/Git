@@ -20,19 +20,30 @@ public class TreeTests {
         Utils.deleteFile("Index.txt");
         Utils.deleteDirectory("Objects");
         Utils.deleteFile("Tree");
-        // FileUtils.deleteDirectory("Objects");
         FileUtils.createDirectory("Objects");
 
-        FileUtils.createDirectory("test");
-        FileUtils.createFile("test/ab");
-        FileUtils.writeFile("test/ab", "BOB");
-        FileUtils.createFile("test/cd");
-        FileUtils.writeFile("test/cd", "ZAA");
-        FileUtils.createDirectory("test/zz");
-        FileUtils.createFile("test/zz/aa");
-        FileUtils.writeFile("test/zz/aa", "YUP");
-        FileUtils.createFile("test/zz/cc");
-        FileUtils.writeFile("test/zz/cc", "MOP");
+        FileUtils.createDirectory("test1");
+        FileUtils.createFile("test1/ab");
+        FileUtils.writeFile("test1/ab", "BOB");
+        FileUtils.createFile("test1/cd");
+        FileUtils.writeFile("test1/cd", "ZAA");
+        FileUtils.createFile("test1/ef");
+        FileUtils.writeFile("test1/ef", "YAH");
+
+        FileUtils.createDirectory("test2");
+        FileUtils.createFile("test2/aa");
+        FileUtils.writeFile("test2/aa", "BOA");
+        FileUtils.createFile("test2/bb");
+        FileUtils.writeFile("test2/bb", "WAB");
+        FileUtils.createFile("test2/cc");
+        FileUtils.writeFile("test2/cc", "OOO");
+
+        FileUtils.createDirectory("test2/fold1");
+        FileUtils.createFile("test2/fold1/dd");
+        FileUtils.writeFile("test2/fold1/dd", "DUO");
+        FileUtils.createDirectory("test2/fold2");
+        FileUtils.createFile("test2/fold2/ee");
+        FileUtils.writeFile("test2/fold2/ee", "YYY");
 
     }
 
@@ -87,34 +98,49 @@ public class TreeTests {
     }
 
     @Test
-    void testAddDirectory() throws Exception {
+    void testAddDirectoryBasic() throws Exception {
         Tree tree = new Tree();
-        String hash = tree.addDirectory("test");
+        String hash = tree.addDirectory("test1");
         String hash1 = FileUtils.sha1("BOB");
         String hash2 = FileUtils.sha1("ZAA");
-        String hash3 = FileUtils.sha1("YUP");
-        String hash4 = FileUtils.sha1("MOP");
+        String hash3 = FileUtils.sha1("YAH");
+        assertTrue(FileUtils.fileExists("Objects/" + hash1));
+        assertTrue(FileUtils.fileExists("Objects/" + hash2));
+        assertTrue(FileUtils.fileExists("Objects/" + hash3));
+        assertEquals(FileUtils.readFile("Objects/" + hash1), "BOB");
+        assertEquals(FileUtils.readFile("Objects/" + hash2), "ZAA");
+        assertEquals(FileUtils.readFile("Objects/" + hash3), "YAH");
+        assertTrue(FileUtils.fileExists("Objects/" + hash));
+        assertEquals(FileUtils.readFile("Objects/" + hash),
+                "blob : 581fd1622f7174405f03bea4a099538e7f253671 : ab\n" + //
+                        "blob : 77f721df21a2d0b314694c692fd017d68350fd54 : ef\n" + //
+                        "blob : 43b0b7d9b8f99e369478bda2399f1ac98d124fd4 : cd");
+    }
+
+    @Test
+    void testAddDirectoryAdvanced() throws Exception {
+        Tree tree = new Tree();
+        String hash = tree.addDirectory("test2");
+        String hash1 = FileUtils.sha1("BOB");
+        String hash2 = FileUtils.sha1("WAB");
+        String hash3 = FileUtils.sha1("OOO");
+        String hash4 = FileUtils.sha1("DUO");
+        String hash5 = FileUtils.sha1("YYY");
         assertTrue(FileUtils.fileExists("Objects/" + hash1));
         assertTrue(FileUtils.fileExists("Objects/" + hash2));
         assertTrue(FileUtils.fileExists("Objects/" + hash3));
         assertTrue(FileUtils.fileExists("Objects/" + hash4));
+        assertTrue(FileUtils.fileExists("Objects/" + hash5));
         assertEquals(FileUtils.readFile("Objects/" + hash1), "BOB");
-        assertEquals(FileUtils.readFile("Objects/" + hash2), "ZAA");
-        assertEquals(FileUtils.readFile("Objects/" + hash3), "YUP");
-        assertEquals(FileUtils.readFile("Objects/" + hash4), "MOP");
+        assertEquals(FileUtils.readFile("Objects/" + hash2), "WAB");
+        assertEquals(FileUtils.readFile("Objects/" + hash3), "OOO");
+        assertEquals(FileUtils.readFile("Objects/" + hash4), "DUO");
+        assertEquals(FileUtils.readFile("Objects/" + hash5), "YYY");
         assertTrue(FileUtils.fileExists("Objects/" + hash));
-        assertEquals(FileUtils.readFile("Objects/" + hash),
-                "blob : 581fd1622f7174405f03bea4a099538e7f253671 : ab\nblob :43b0b7d9b8f99e369478bda2399f1ac98d124fd4 : cd\ntree :3448752373dfe872923cabce6607c9637676ee9e : zz");
-
-        // Path resourceDirectory = Paths.get("objects");
-        // String absolutePath = resourceDirectory.toFile().getAbsolutePath();
-        // File f = new File(absolutePath);
-        // String[] fNames = f.list();
-        // String a = "";
-        // for (String fName : fNames) {
-        // a += fName + "\n";
-        // }
-        // throw new Exception(a);
-        // throw new Exception(absolutePath);
+        assertEquals(FileUtils.readFile("Objects/" + hash), "blob : 97bdfda29cd652224745a552bc6e2f8cb7ab5d16 : bb\n" + //
+                "blob : d652148cc8af1881cc6a1b041b14449a24e77d3 : aa\n" + //
+                "blob : d34c0b1d281e4879b11710a91d3d9161f092b5bd : cc\n" + //
+                "tree : 1f34cc55024356cec15c25c621fb8eeb2b33c000 : fold2\n" + //
+                "tree : 46aeee1299fa4040e341f05a9bc3191d54c55126 : fold1");
     }
 }

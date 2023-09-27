@@ -41,6 +41,30 @@ public class Tester {
         // FileUtils.createFile("test/zz/cc");
         // FileUtils.writeFile("test/zz/cc", "MOP");
         Tree t = new Tree();
-        t.addDirectory("test");
+        // FileUtils.createDirectory("test1");
+        // FileUtils.createFile("test1/ab");
+        // FileUtils.writeFile("test1/ab", "BOB");
+        // FileUtils.createFile("test1/cd");
+        // FileUtils.writeFile("test1/cd", "ZAA");
+        // FileUtils.createFile("test1/ef");
+        // FileUtils.writeFile("test1/ef", "YAH");
+        // t.addDirectory("test1");
+
+        // FileUtils.createDirectory("test2");
+        // FileUtils.createFile("test2/aa");
+        // FileUtils.writeFile("test2/aa", "BOA");
+        // FileUtils.createFile("test2/bb");
+        // FileUtils.writeFile("test2/bb", "WAB");
+        // FileUtils.createFile("test2/cc");
+        // FileUtils.writeFile("test2/cc", "OOO");
+
+        // FileUtils.createDirectory("test2/fold1");
+        // FileUtils.createFile("test2/fold1/dd");
+        // FileUtils.writeFile("test2/fold1/dd", "DUO");
+        // FileUtils.createDirectory("test2/fold2");
+        // t.addDirectory("test2");
+        FileUtils.createFile("test2/fold2/ee");
+        FileUtils.writeFile("test2/fold2/ee", "YYY");
+        t.addDirectory("test2");
     }
 }

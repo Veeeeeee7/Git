@@ -21,13 +21,13 @@ public class Index {
             @Override
             public boolean accept(File file, String name) {
                 File currentFile = new File(name);
-                return !currentFile.isHidden() && !currentFile.isDirectory() && !name.equals("Index.txt");
+                return !currentFile.isHidden() && !name.equals("Index.txt");
             }
         });
     }
 
     public void init() {
-        File objects = new File("objects");
+        File objects = new File("Objects");
         objects.mkdir();
         for (int i = 0; i < fileNames.length; i++) {
             File file = new File(fileNames[i]);
@@ -70,18 +70,18 @@ public class Index {
         BufferedReader br = new BufferedReader(new FileReader("Index.txt"));
         String filename = "";
 
-        while(br.ready()) {
+        while (br.ready()) {
             String line = br.readLine();
             String check = "";
             check = line.substring(43);
-            if(!check.equals(fileName)) {
-                if(sb.toString().equals(""))
+            if (!check.equals(fileName)) {
+                if (sb.toString().equals(""))
                     sb.append(line);
                 else {
                     String s = '\n' + line;
                     sb.append(s);
                 }
-            } 
+            }
         }
         PrintWriter pw = new PrintWriter("Index.txt");
         pw.print(sb);
@@ -119,9 +119,9 @@ public class Index {
         StringBuilder sb = new StringBuilder();
         BufferedReader br = new BufferedReader(new FileReader("Index.txt"));
 
-        while(br.ready()) {
+        while (br.ready()) {
             char c = (char) br.read();
-            if(br.ready())
+            if (br.ready())
                 sb.append(c);
             else
                 break;
@@ -149,7 +149,6 @@ public class Index {
         } catch (Exception e) {
             System.out.println("cant create Index.txt");
         }
-        
+
     }
 }
-

@@ -5,6 +5,9 @@ import Utilities.FileUtils;
 
 public class Tester {
     public static void main(String[] args) throws Exception {
+        Commit c = new Commit("parent commit", "author", "summary");
+        c.setNextCommit("NEXT COMMIT");
+        System.out.println(c.createCommit());
         // Index index = new Index();
         // index.init();
 
@@ -40,7 +43,7 @@ public class Tester {
         // FileUtils.writeFile("test/zz/aa", "YUP");
         // FileUtils.createFile("test/zz/cc");
         // FileUtils.writeFile("test/zz/cc", "MOP");
-        Tree t = new Tree();
+        // Tree t = new Tree();
         // FileUtils.createDirectory("test1");
         // FileUtils.createFile("test1/ab");
         // FileUtils.writeFile("test1/ab", "BOB");
@@ -63,8 +66,12 @@ public class Tester {
         // FileUtils.writeFile("test2/fold1/dd", "DUO");
         // FileUtils.createDirectory("test2/fold2");
         // t.addDirectory("test2");
-        FileUtils.createFile("test2/fold2/ee");
-        FileUtils.writeFile("test2/fold2/ee", "YYY");
-        t.addDirectory("test2");
+        // FileUtils.createFile("test2/fold2/ee");
+        // FileUtils.writeFile("test2/fold2/ee", "YYY");
+        // t.addDirectory("test2");
+        // Tree t = new Tree();
+        // Tree tt = new Tree();
+        // t.addDirectory("test1");
+        // tt.addDirectory("test2");
     }
 }

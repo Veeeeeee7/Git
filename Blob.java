@@ -53,10 +53,10 @@ public class Blob {
         return null;
     }
 
-    public void createBlob() {
+    public String createBlob() {
         try {
             // String compressed = compress();
-            File blob = new File("objects/" + hash);
+            File blob = new File("Objects/" + hash);
             if (!blob.exists()) {
                 blob.createNewFile();
             }
@@ -64,9 +64,11 @@ public class Blob {
             // writer.write(compressed);
             writer.write(fileContents);
             writer.close();
+            return hash;
         } catch (Exception e) {
             System.out.println("cant create blob file");
         }
+        return "";
     }
 
     private String compress() {

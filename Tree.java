@@ -21,8 +21,10 @@ public class Tree {
 
     private File f;
     private boolean filled; // returns false if f has no entries
+    private ArrayList<String> content;
 
     public Tree() throws URISyntaxException {
+        content = new ArrayList<>();
         this.f = new File("Tree");
         if (FileUtils.fileExists("Tree")) {
             FileUtils.deleteFile("Tree");
@@ -31,6 +33,7 @@ public class Tree {
     }
 
     public void add(String str) throws FileNotFoundException, IOException {
+        content.add(str);
         FileWriter fw = new FileWriter("Tree", true);
         if (filled) {
             String s = '\n' + str;
@@ -43,6 +46,11 @@ public class Tree {
     }
 
     public void remove(String sha1) throws FileNotFoundException, IOException {
+        for (int i = content.size() - 1; i >= 0; i--) {
+            if (content.get(i).contains(sha1)) {
+                content.remove(i);
+            }
+        }
         StringBuilder sb = new StringBuilder();
         BufferedReader br = new BufferedReader(new FileReader("Tree"));
         String filename = "";
@@ -71,13 +79,30 @@ public class Tree {
         br.close();
     }
 
-    public void finalize() {
+    public void finalize() throws IOException {
+        StringBuilder sb = new StringBuilder();
+        for (String s : content) {
+            sb.append(s + "\n");
+        }
+        if (!sb.isEmpty()) {
+            sb.deleteCharAt(sb.length() - 1);
+        }
+        Utils.deleteFile("Tree");
+        f.createNewFile();
+        Utils.writeStringToFile("Tree", sb.toString());
         Blob blob = new Blob(f);
         blob.createBlob();
     }
 
     public String getSHA1() throws Exception {
-        return FileUtils.sha1(FileUtils.readFile("Tree"));
+        StringBuilder sb = new StringBuilder();
+        for (String s : content) {
+            sb.append(s + "\n");
+        }
+        if (!sb.isEmpty()) {
+            sb.deleteCharAt(sb.length() - 1);
+        }
+        return FileUtils.sha1(sb.toString());
     }
 
     public String addDirectory(String folderName) throws Exception {

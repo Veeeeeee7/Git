@@ -15,9 +15,9 @@ public class CommitTests {
     void testCreateCommit() throws Exception {
         Commit commit = new Commit("someParents", "author claire", "this is for testing");
         commit.createCommit();
-        Path path = Paths.get("objects");
+        Path path = Paths.get("Objects");
         assertTrue(Files.exists(path));
-        File file = new File("objects/5a1f5a7c2b9a1bed276bafb2b2f4c68842842a18");
+        File file = new File("Objects/5a1f5a7c2b9a1bed276bafb2b2f4c68842842a18");
         assertTrue(file.exists());
     }
 
@@ -25,7 +25,7 @@ public class CommitTests {
     void testGetDate() throws Exception {
         Commit commit = new Commit("someParents", "author claire", "this is for testing");
         String actaul = commit.getDate();
-        String expected = "2023-09-22";
+        String expected = "2023-09-29";
         assertEquals(expected, actaul);
     }
 }

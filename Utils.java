@@ -45,24 +45,24 @@ public class Utils {
         folder.mkdir();
     }
 
-    public static String readFile(String fileName) {
-        try {
-            File file = new File(fileName);
-            StringBuilder contents = new StringBuilder();
-            Scanner scanner = new Scanner(file);
-            while (scanner.hasNextLine()) {
-                contents.append(scanner.nextLine() + "\n");
-            }
-            if (contents.isEmpty()) {
-                return "";
-            }
-            contents.deleteCharAt(contents.length() - 1);
-            return contents.toString();
-        } catch (Exception e) {
-            System.out.println("File doesnt exist");
-        }
-        return null;
-    }
+    // public static String readFile(String fileName) {
+    // try {
+    // File file = new File(fileName);
+    // StringBuilder contents = new StringBuilder();
+    // Scanner scanner = new Scanner(file);
+    // while (scanner.hasNextLine()) {
+    // contents.append(scanner.nextLine() + "\n");
+    // }
+    // if (contents.isEmpty()) {
+    // return "";
+    // }
+    // contents.deleteCharAt(contents.length() - 1);
+    // return contents.toString();
+    // } catch (Exception e) {
+    // System.out.println("File doesnt exist");
+    // }
+    // return null;
+    // }
 
     public static boolean fileExists(String fileName) {
         File f = new File(fileName);

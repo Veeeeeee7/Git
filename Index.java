@@ -11,11 +11,11 @@ import java.util.Stack;
 
 public class Index {
     protected String[] fileNames;
-    protected HashMap<String, Stack<String>> index;
+    protected HashMap<String, String> index;
     protected StringBuilder content = new StringBuilder();
 
     public Index() {
-        index = new HashMap<String, Stack<String>>();
+        index = new HashMap<String, String>();
         // File folder = new File(".");
         // fileNames = folder.list(new FilenameFilter() {
         // @Override
@@ -34,13 +34,7 @@ public class Index {
             Blob blob = new Blob(file);
             String hash = blob.hash;
             blob.createBlob();
-            if (index.containsKey(hash)) {
-                index.get(hash).push(fileNames[i]);
-            } else {
-                Stack<String> stack = new Stack<String>();
-                stack.push(fileNames[i]);
-                index.put(hash, stack);
-            }
+            index.put(hash, fileNames[i]);
         }
 
         try {
@@ -52,9 +46,7 @@ public class Index {
             // StringBuilder str = new StringBuilder();
             for (String hash : this.index.keySet()) {
                 content.append(hash + " : ");
-                for (String fileName : this.index.get(hash)) {
-                    content.append(fileName + ", ");
-                }
+                content.append(index.get(hash) + ", ");
                 content.delete(content.length() - 2, content.length());
                 content.append("\n");
             }
@@ -94,15 +86,17 @@ public class Index {
         Blob blob = new Blob(file);
         String hash = blob.hash;
         blob.createBlob();
-        if (index.containsKey(hash)) {
-            index.get(hash).push(fileName);
-            content.insert(content.indexOf(index.get(hash).peek()), " , " + fileName);
-        } else {
-            Stack<String> stack = new Stack<String>();
-            stack.push(fileName);
-            index.put(hash, stack);
-            content.append(hash + " : " + fileName + "\n");
-        }
+        // if (index.containsKey(hash)) {
+        // index.get(hash).push(fileName);
+        // content.insert(content.indexOf(index.get(hash).peek()), " , " + fileName);
+        // } else {
+        // Stack<String> stack = new Stack<String>();
+        // stack.push(fileName);
+        // index.put(hash, stack);
+        // content.append(hash + " : " + fileName + "\n");
+        // }
+        index.put(hash, fileName);
+        content.append(hash + " : " + fileName + "\n");
 
         try {
             File indexFile = new File("Index.txt");

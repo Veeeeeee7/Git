@@ -15,8 +15,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import Utilities.FileUtils;
-
 public class Tree {
 
     private File f;
@@ -26,8 +24,8 @@ public class Tree {
     public Tree() throws URISyntaxException {
         content = new ArrayList<>();
         this.f = new File("Tree");
-        if (FileUtils.fileExists("Tree")) {
-            FileUtils.deleteFile("Tree");
+        if (Utils.fileExists("Tree")) {
+            Utils.deleteFile("Tree");
         }
         filled = false;
     }
@@ -102,11 +100,11 @@ public class Tree {
         if (!sb.isEmpty()) {
             sb.deleteCharAt(sb.length() - 1);
         }
-        return FileUtils.sha1(sb.toString());
+        return Utils.sha1(sb.toString());
     }
 
     public String addDirectory(String folderName) throws Exception {
-        if (!FileUtils.fileExists(folderName)) {
+        if (!Utils.fileExists(folderName)) {
             throw new Exception("Folder does not exist");
         }
 

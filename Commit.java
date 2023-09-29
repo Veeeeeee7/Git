@@ -12,8 +12,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.LinkedList;
 
-import Utilities.FileUtils;
-
 public class Commit {
 
     private String treeSHA1;
@@ -59,6 +57,7 @@ public class Commit {
         String content = getContentWithThirdLine();
         Utils.deleteFile("objects/" + fileHash);
         File f = new File("objects/" + fileHash);
+        f.createNewFile();
         Utils.writeStringToFile("objects/" + fileHash, content);
     }
 

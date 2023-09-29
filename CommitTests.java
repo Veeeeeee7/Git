@@ -1,5 +1,6 @@
 import static org.junit.Assert.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.Assert.assertTrue;
+// import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.File;
 import java.io.IOException;
@@ -27,5 +28,15 @@ public class CommitTests {
         String actaul = commit.getDate();
         String expected = "2023-09-29";
         assertEquals(expected, actaul);
+    }
+
+    @Test
+    void testSetNextCommit() throws Exception {
+        Commit c = new Commit("parent commit", "author", "summary");
+        String hash = c.createCommit();
+        c.setNextCommit("next commit");
+        assertTrue("the right file isn't created", Utils.fileExists("objects/" + hash));
+        assertEquals("the right file contents aren't there", Utils.readFile("objects/" + hash),
+                "da39a3ee5e6b4b0d3255bfef95601890afd80709\nparent commit\nnext commit\nauthor\n2023-09-29\nsummary");
     }
 }

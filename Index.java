@@ -16,14 +16,14 @@ public class Index {
 
     public Index() {
         index = new HashMap<String, Stack<String>>();
-        File folder = new File(".");
-        fileNames = folder.list(new FilenameFilter() {
-            @Override
-            public boolean accept(File file, String name) {
-                File currentFile = new File(name);
-                return !currentFile.isHidden() && !name.equals("Index.txt");
-            }
-        });
+        // File folder = new File(".");
+        // fileNames = folder.list(new FilenameFilter() {
+        // @Override
+        // public boolean accept(File file, String name) {
+        // File currentFile = new File(name);
+        // return !currentFile.isHidden();
+        // }
+        // });
     }
 
     public void init() {

@@ -1,8 +1,6 @@
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-import Utilities.FileUtils;
-
 public class Tester {
     public static void main(String[] args) throws Exception {
         Commit c = new Commit("parent commit", "author", "summary");

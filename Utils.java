@@ -6,6 +6,9 @@ import java.util.Scanner;
 public class Utils {
 
     public static void writeStringToFile(String filename, String str) throws FileNotFoundException {
+        if (!fileExists(filename)) {
+            createFile(filename);
+        }
         PrintWriter pw = new PrintWriter(filename);
         pw.print(str);
         pw.close();

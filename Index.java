@@ -6,16 +6,18 @@ import java.io.FileWriter;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Stack;
 
 public class Index {
-    protected String[] fileNames;
+    protected ArrayList<String> fileNames;
     protected HashMap<String, String> index;
     protected StringBuilder content = new StringBuilder();
 
     public Index() {
         index = new HashMap<String, String>();
+        fileNames = new ArrayList<>();
         // File folder = new File(".");
         // fileNames = folder.list(new FilenameFilter() {
         // @Override
@@ -29,12 +31,12 @@ public class Index {
     public void init() {
         File objects = new File("Objects");
         objects.mkdir();
-        for (int i = 0; i < fileNames.length; i++) {
-            File file = new File(fileNames[i]);
+        for (String f : fileNames) {
+            File file = new File(f);
             Blob blob = new Blob(file);
             String hash = blob.hash;
             blob.createBlob();
-            index.put(hash, fileNames[i]);
+            index.put(hash, f);
         }
 
         try {
@@ -58,6 +60,7 @@ public class Index {
     }
 
     public void remove(String fileName) throws IOException {
+        fileNames.remove(fileName);
         StringBuilder sb = new StringBuilder();
         BufferedReader br = new BufferedReader(new FileReader("Index.txt"));
         String filename = "";
@@ -82,6 +85,7 @@ public class Index {
     }
 
     public void add(String fileName) throws IOException {
+        fileNames.add(fileName);
         File file = new File(fileName);
         Blob blob = new Blob(file);
         String hash = blob.hash;
@@ -126,23 +130,23 @@ public class Index {
         fw.close();
     }
 
-    public void removeIndex() throws IOException {
-        try {
-            FileWriter writer = new FileWriter("Index.txt");
-            // StringBuilder str = new StringBuilder();
-            for (String hash : this.index.keySet()) {
-                content.append(hash + " : ");
-                for (String fileName : this.index.get(hash)) {
-                    content.append(fileName + ", ");
-                }
-                content.delete(content.length() - 2, content.length());
-                content.append("\n");
-            }
-            writer.write(content.toString());
-            writer.close();
-        } catch (Exception e) {
-            System.out.println("cant create Index.txt");
-        }
+    // public void removeIndex() throws IOException {
+    // try {
+    // FileWriter writer = new FileWriter("Index.txt");
+    // // StringBuilder str = new StringBuilder();
+    // for (String hash : this.index.keySet()) {
+    // content.append(hash + " : ");
+    // for (String fileName : this.index.get(hash)) {
+    // content.append(fileName + ", ");
+    // }
+    // content.delete(content.length() - 2, content.length());
+    // content.append("\n");
+    // }
+    // writer.write(content.toString());
+    // writer.close();
+    // } catch (Exception e) {
+    // System.out.println("cant create Index.txt");
+    // }
 
-    }
+    // }
 }

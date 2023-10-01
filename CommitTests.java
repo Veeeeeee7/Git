@@ -61,12 +61,12 @@ public class CommitTests {
         Index index = new Index();
         index.add("testFile1");
         index.add("testFile2");
-        Commit c = new Commit("parent commit", "author", "summary");
+        Commit c = new Commit("", "author", "summary");
         String hash = c.createCommit();
         c.setNextCommit("next commit");
         assertTrue("the right file isn't created", Utils.fileExists("objects/" + hash));
         assertEquals("the right file contents aren't there", Utils.writeFileToString("objects/" + hash),
-                c.getTreeHash() + "\nparent commit\nnext commit\nauthor\n" + c.getDate()
+                "8458148ff577ce57243004fd84317bb14636107\n\nnext commit\nauthor\n" + c.getDate()
                         + "\nsummary");
     }
 
@@ -79,7 +79,7 @@ public class CommitTests {
         String hash = c.createCommit();
         assertTrue("the right file isn't created", Utils.fileExists("objects/" + hash));
         assertEquals("the right file contents aren't there", Utils.writeFileToString("objects/" + hash),
-                c.getTreeHash() + "\n\n\nAUTHOR\n" + c.getDate()
+                "8458148ff577ce57243004fd84317bb14636107\n\n\nAUTHOR\n" + c.getDate()
                         + "\nBEST SUMMARY");
     }
 
@@ -94,5 +94,15 @@ public class CommitTests {
         Commit c2 = new Commit(hash1, "AUTHOR", "second commit");
         String hash2 = c2.createCommit();
         c1.setNextCommit(hash2);
+
+        assertEquals("the right file contents for commit 1 aren't there",
+                "8458148ff577ce57243004fd84317bb14636107\n\n4c7b64635e83037f75eb16d5a40f60c64cea64da\nAUTHOR\n"
+                        + c1.getDate() + "\nfirst commit",
+                Utils.writeFileToString("Objects/" + hash1));
+
+        assertEquals("the right file contents for commit 2 aren't there",
+                "df589b9e759f5524c387a52e1a5b8435ff39f55a\n8b661cba890f75b3b0b9cbd44d7af76c3854f8d2\n\nAUTHOR\n"
+                        + c2.getDate() + "\nsecond commit",
+                Utils.writeFileToString("Objects/" + hash2));
     }
 }

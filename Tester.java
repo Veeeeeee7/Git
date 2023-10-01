@@ -3,6 +3,11 @@ import java.io.IOException;
 
 public class Tester {
     public static void main(String[] args) throws Exception {
+        Index i = new Index();
+        i.add("Blob.java");
+        i.add("Tree.java");
+        Commit c = new Commit("parent", "author", "summary");
+        c.createCommit();
         // Index ind = new Index();
         // Utils.writeStringToFile("testv", "test file contents");
         // Utils.writeStringToFile("testv2", "hello");
@@ -14,11 +19,11 @@ public class Tester {
         // String expectedResult = "blob : aaf4c61ddcc5e8a2dabede0f3b482cd9aea9434d :
         // testv2";
         // String indexContents = Utils.writeFileToString("Index");
-        Index index = new Index();
-        index.add("TestFolder");
-        index.add("Blob.java");
-        index.init();
-        index.remove("TestFolder");
+        // Index index = new Index();
+        // index.add("TestFolder");
+        // index.add("Blob.java");
+        // index.init();
+        // index.remove("TestFolder");
         // Utils.deleteFile("Index");
 
         // index.init();

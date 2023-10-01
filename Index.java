@@ -66,6 +66,14 @@ public class Index {
         }
     }
 
+    public static void clearContent() {
+        // index = new HashMap<String, String>();
+        // fileNames = new ArrayList<>();
+        // content = new StringBuilder();
+        Utils.deleteFile("Index");
+        Utils.createFile("Index");
+    }
+
     public void remove(String fileName) throws IOException {
         fileNames.remove(fileName);
         StringBuilder sb = new StringBuilder();

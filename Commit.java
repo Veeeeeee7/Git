@@ -71,6 +71,14 @@ public class Commit {
 
     private void createTree() throws Exception {
         Tree tree = new Tree();
+        String indexContent = Utils.writeFileToString("Index");
+        String[] content = indexContent.split("\n");
+        for (int i = 0; i < content.length; i++) {
+            tree.add(content[i]);
+        }
+        tree.add("tree : " + parentCommit);
+        tree.finalize();
+        Index.clearContent();
         treeSHA1 = tree.getSHA1();
     }
 
@@ -99,7 +107,7 @@ public class Commit {
     public String getDate() {
         Date date = Calendar.getInstance().getTime();
         DateFormat dateFormat = new SimpleDateFormat("YYYY-MM-dd");
-        System.out.println(dateFormat.format(date));
+        // System.out.println(dateFormat.format(date));
         return dateFormat.format(date);
     }
 }

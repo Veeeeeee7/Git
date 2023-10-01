@@ -29,40 +29,47 @@ public class Index {
     }
 
     public void init() {
+        Utils.deleteFile("Index");
+        Utils.createFile("Index");
         File objects = new File("Objects");
         objects.mkdir();
-        for (String f : fileNames) {
-            File file = new File(f);
-            Blob blob = new Blob(file);
-            String hash = blob.hash;
-            blob.createBlob();
-            index.put(hash, f);
+        if (index.isEmpty()) {
+            return;
         }
+        // for (String f : fileNames) {
+        // File file = new File(f);
+        // Blob blob = new Blob(file);
+        // String hash = blob.hash;
+        // blob.createBlob();
+        // index.put(hash, f);
+        // }
 
         try {
-            File indexFile = new File("Index.txt");
-            if (!indexFile.exists()) {
-                indexFile.createNewFile();
-            }
+            File indexFile = new File("Index");
+            // if (!indexFile.exists()) {
+            // indexFile.createNewFile();
+            // }
             FileWriter writer = new FileWriter(indexFile);
             // StringBuilder str = new StringBuilder();
-            for (String hash : this.index.keySet()) {
-                content.append(hash + " : ");
-                content.append(index.get(hash) + ", ");
-                content.delete(content.length() - 2, content.length());
-                content.append("\n");
-            }
+            // for (String hash : this.index.keySet()) {
+            // content.append(hash + " : ");
+            // content.append(index.get(hash));
+            // content.delete(content.length() - 2, content.length());
+            // content.append("\n");
+            // }
+            // content.deleteCharAt(content.length() - 1);
+
             writer.write(content.toString());
             writer.close();
         } catch (Exception e) {
-            System.out.println("cant create Index.txt");
+            System.out.println("cant create Index");
         }
     }
 
     public void remove(String fileName) throws IOException {
         fileNames.remove(fileName);
         StringBuilder sb = new StringBuilder();
-        BufferedReader br = new BufferedReader(new FileReader("Index.txt"));
+        BufferedReader br = new BufferedReader(new FileReader("Index"));
         String filename = "";
 
         while (br.ready()) {
@@ -78,13 +85,22 @@ public class Index {
                 }
             }
         }
-        PrintWriter pw = new PrintWriter("Index.txt");
+        PrintWriter pw = new PrintWriter("Index");
         pw.print(sb);
         pw.close();
         br.close();
     }
 
-    public void add(String fileName) throws IOException {
+    public void add(String fileName) throws Exception {
+        File f = new File(fileName);
+        if (f.isFile()) {
+            addFile(fileName);
+        } else if (f.isDirectory()) {
+            addDirectory(fileName);
+        }
+    }
+
+    public void addFile(String fileName) throws IOException {
         fileNames.add(fileName);
         File file = new File(fileName);
         Blob blob = new Blob(file);
@@ -100,22 +116,40 @@ public class Index {
         // content.append(hash + " : " + fileName + "\n");
         // }
         index.put(hash, fileName);
-        content.append(hash + " : " + fileName + "\n");
+        if (!content.isEmpty()) {
+            content.append("\n");
+        }
+        content.append("blob : " + hash + " : " + fileName);
 
         try {
-            File indexFile = new File("Index.txt");
+            File indexFile = new File("Index");
             FileWriter writer = new FileWriter(indexFile);
             writer.write(content.toString());
             writer.close();
         } catch (Exception e) {
-            System.out.println("cant create Index.txt");
+            System.out.println("cant create Index");
+        }
+        removeNewLine();
+    }
+
+    private void addDirectory(String fileName) throws Exception {
+        Tree t = new Tree();
+        String treeHash = t.addDirectory(fileName);
+        content.append("tree : " + treeHash + " : " + fileName);
+        try {
+            File indexFile = new File("Index");
+            FileWriter writer = new FileWriter(indexFile);
+            writer.write(content.toString());
+            writer.close();
+        } catch (Exception e) {
+            System.out.println("cant create Index");
         }
         removeNewLine();
     }
 
     public void removeNewLine() throws IOException {
         StringBuilder sb = new StringBuilder();
-        BufferedReader br = new BufferedReader(new FileReader("Index.txt"));
+        BufferedReader br = new BufferedReader(new FileReader("Index"));
 
         while (br.ready()) {
             char c = (char) br.read();
@@ -125,14 +159,14 @@ public class Index {
                 break;
         }
 
-        FileWriter fw = new FileWriter("Index.txt");
+        FileWriter fw = new FileWriter("Index");
         fw.write(sb.toString());
         fw.close();
     }
 
     // public void removeIndex() throws IOException {
     // try {
-    // FileWriter writer = new FileWriter("Index.txt");
+    // FileWriter writer = new FileWriter("Index");
     // // StringBuilder str = new StringBuilder();
     // for (String hash : this.index.keySet()) {
     // content.append(hash + " : ");
@@ -145,7 +179,7 @@ public class Index {
     // writer.write(content.toString());
     // writer.close();
     // } catch (Exception e) {
-    // System.out.println("cant create Index.txt");
+    // System.out.println("cant create Index");
     // }
 
     // }

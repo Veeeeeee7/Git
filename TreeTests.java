@@ -15,7 +15,7 @@ public class TreeTests {
     static void setUpBeforeClass() throws Exception {
 
         Utils.writeStringToFile("junit_example_file_data.txt", "test file contents");
-        Utils.deleteFile("Index.txt");
+        Utils.deleteFile("Index");
         Utils.deleteDirectory("Objects");
         Utils.deleteFile("Tree");
         Utils.createDirectory("Objects");
@@ -48,7 +48,7 @@ public class TreeTests {
     @AfterAll
     static void tearDownAfterClass() throws Exception {
         Utils.deleteFile("junit_example_file_data.txt");
-        Utils.deleteFile("Index.txt");
+        Utils.deleteFile("Index");
         Utils.deleteDirectory("Objects");
         Utils.deleteFile("Tree");
         Utils.deleteDirectory("test");

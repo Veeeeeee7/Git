@@ -20,7 +20,7 @@ public class JunitTests {
     static void setUpBeforeClass() throws Exception {
 
         Utils.writeStringToFile("junit_example_file_data.txt", "test file contents");
-        Utils.deleteFile("Index.txt");
+        Utils.deleteFile("Index");
         Utils.deleteDirectory("Objects");
         Utils.deleteFile("Tree");
 
@@ -29,7 +29,7 @@ public class JunitTests {
     @AfterAll
     static void tearDownAfterClass() throws Exception {
         Utils.deleteFile("junit_example_file_data.txt");
-        Utils.deleteFile("Index.txt");
+        Utils.deleteFile("Index");
         Utils.deleteDirectory("Objects");
         Utils.deleteFile("Tree");
     }
@@ -43,7 +43,7 @@ public class JunitTests {
         index.init();
 
         // check if the file exists
-        File file = new File("Index.txt");
+        File file = new File("Index");
         Path path = Paths.get("Objects");
 
         assertTrue(file.exists());

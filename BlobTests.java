@@ -7,22 +7,22 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 public class BlobTests {
-    
+
     @BeforeAll
     static void setUpBeforeClass() throws Exception {
-         Utils.deleteFile("Index.txt");
-         Utils.deleteDirectory("Objects");
-         Utils.deleteFile("Tree");
-         
+        Utils.deleteFile("Index");
+        Utils.deleteDirectory("Objects");
+        Utils.deleteFile("Tree");
+
     }
 
     @AfterAll
     static void tearDownAfterClass() throws Exception {
-         Utils.deleteFile("Index.txt");
-         Utils.deleteDirectory("Objects");
-         Utils.deleteFile("Tree");
+        Utils.deleteFile("Index");
+        Utils.deleteDirectory("Objects");
+        Utils.deleteFile("Tree");
     }
-    
+
     @Test
     void testCreateBlob() throws IOException {
         File file1 = new File("file1");

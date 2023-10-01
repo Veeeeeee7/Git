@@ -19,7 +19,7 @@ public class IndexTests {
 
         Utils.writeStringToFile("testv", "test file contents");
         Utils.writeStringToFile("testv2", "hello");
-        Utils.deleteFile("Index.txt");
+        Utils.deleteFile("Index");
         Utils.deleteDirectory("Objects");
         Utils.deleteFile("Tree");
 
@@ -29,19 +29,19 @@ public class IndexTests {
     static void tearDownAfterClass() throws Exception {
         Utils.deleteFile("testv");
         Utils.deleteFile("testv2");
-        Utils.deleteFile("Index.txt");
+        Utils.deleteFile("Index");
         Utils.deleteDirectory("Objects");
         Utils.deleteFile("Tree");
     }
 
     @Test
-    void testAdd() throws IOException {
+    void testAdd() throws Exception {
 
         Index ind = new Index();
         ind.add("testv");
 
         String expectedResult = "cbaedccfded0c768295aae27c8e5b3a0025ef340 : testv";
-        String index = Utils.writeFileToString("Index.txt");
+        String index = Utils.writeFileToString("Index");
 
         assertEquals("Added to index incorrectly", expectedResult, index);
     }
@@ -52,15 +52,15 @@ public class IndexTests {
         ind.init();
 
         Path path1 = Paths.get("Objects");
-        Path path2 = Paths.get("Index.txt");
+        Path path2 = Paths.get("Index");
 
         assertTrue("Did not create objects folder", Files.exists(path1));
-        assertTrue("Did not create Index.txt", Files.exists(path2));
+        assertTrue("Did not create Index", Files.exists(path2));
 
     }
 
     @Test
-    void testRemove() throws IOException {
+    void testRemove() throws Exception {
         Index ind = new Index();
         ind.add("testv");
         ind.add("testv2");
@@ -68,7 +68,7 @@ public class IndexTests {
         ind.remove("testv");
 
         String expectedResult = "aaf4c61ddcc5e8a2dabede0f3b482cd9aea9434d : testv2";
-        String indexContents = Utils.writeFileToString("Index.txt");
+        String indexContents = Utils.writeFileToString("Index");
 
         assertEquals("Did not remove correctly", expectedResult, indexContents);
 

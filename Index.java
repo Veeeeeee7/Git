@@ -105,6 +105,8 @@ public class Index {
         updateContent();
         String temp = content.toString() + "\n";
         if (temp.contains(fileName + "\n")) {
+            remove(fileName);
+            add(fileName);
             return;
         }
 

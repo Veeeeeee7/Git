@@ -36,7 +36,7 @@ public class CommitTests {
         String hash = c.createCommit();
         c.setNextCommit("next commit");
         assertTrue("the right file isn't created", Utils.fileExists("objects/" + hash));
-        assertEquals("the right file contents aren't there", Utils.readFile("objects/" + hash),
+        assertEquals("the right file contents aren't there", Utils.writeFileToString("objects/" + hash),
                 "da39a3ee5e6b4b0d3255bfef95601890afd80709\nparent commit\nnext commit\nauthor\n2023-09-29\nsummary");
     }
 }

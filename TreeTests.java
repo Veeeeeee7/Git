@@ -105,11 +105,11 @@ public class TreeTests {
         assertTrue(Utils.fileExists("Objects/" + hash1));
         assertTrue(Utils.fileExists("Objects/" + hash2));
         assertTrue(Utils.fileExists("Objects/" + hash3));
-        assertEquals(Utils.readFile("Objects/" + hash1), "BOB");
-        assertEquals(Utils.readFile("Objects/" + hash2), "ZAA");
-        assertEquals(Utils.readFile("Objects/" + hash3), "YAH");
+        assertEquals(Utils.writeFileToString("Objects/" + hash1), "BOB");
+        assertEquals(Utils.writeFileToString("Objects/" + hash2), "ZAA");
+        assertEquals(Utils.writeFileToString("Objects/" + hash3), "YAH");
         assertTrue(Utils.fileExists("Objects/" + hash));
-        assertEquals(Utils.readFile("Objects/" + hash),
+        assertEquals(Utils.writeFileToString("Objects/" + hash),
                 "blob : 581fd1622f7174405f03bea4a099538e7f253671 : ab\n" + //
                         "blob : 77f721df21a2d0b314694c692fd017d68350fd54 : ef\n" + //
                         "blob : 43b0b7d9b8f99e369478bda2399f1ac98d124fd4 : cd");
@@ -129,16 +129,17 @@ public class TreeTests {
         assertTrue(Utils.fileExists("Objects/" + hash3));
         assertTrue(Utils.fileExists("Objects/" + hash4));
         assertTrue(Utils.fileExists("Objects/" + hash5));
-        assertEquals(Utils.readFile("Objects/" + hash1), "BOB");
-        assertEquals(Utils.readFile("Objects/" + hash2), "WAB");
-        assertEquals(Utils.readFile("Objects/" + hash3), "OOO");
-        assertEquals(Utils.readFile("Objects/" + hash4), "DUO");
-        assertEquals(Utils.readFile("Objects/" + hash5), "YYY");
+        assertEquals(Utils.writeFileToString("Objects/" + hash1), "BOB");
+        assertEquals(Utils.writeFileToString("Objects/" + hash2), "WAB");
+        assertEquals(Utils.writeFileToString("Objects/" + hash3), "OOO");
+        assertEquals(Utils.writeFileToString("Objects/" + hash4), "DUO");
+        assertEquals(Utils.writeFileToString("Objects/" + hash5), "YYY");
         assertTrue(Utils.fileExists("Objects/" + hash));
-        assertEquals(Utils.readFile("Objects/" + hash), "blob : 97bdfda29cd652224745a552bc6e2f8cb7ab5d16 : bb\n" + //
-                "blob : d652148cc8af1881cc6a1b041b14449a24e77d3 : aa\n" + //
-                "blob : d34c0b1d281e4879b11710a91d3d9161f092b5bd : cc\n" + //
-                "tree : 1f34cc55024356cec15c25c621fb8eeb2b33c000 : fold2\n" + //
-                "tree : 46aeee1299fa4040e341f05a9bc3191d54c55126 : fold1");
+        assertEquals(Utils.writeFileToString("Objects/" + hash),
+                "blob : 97bdfda29cd652224745a552bc6e2f8cb7ab5d16 : bb\n" + //
+                        "blob : d652148cc8af1881cc6a1b041b14449a24e77d3 : aa\n" + //
+                        "blob : d34c0b1d281e4879b11710a91d3d9161f092b5bd : cc\n" + //
+                        "tree : 1f34cc55024356cec15c25c621fb8eeb2b33c000 : fold2\n" + //
+                        "tree : 46aeee1299fa4040e341f05a9bc3191d54c55126 : fold1");
     }
 }

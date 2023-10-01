@@ -14,6 +14,8 @@ public class TreeTests {
     @BeforeAll
     static void setUpBeforeClass() throws Exception {
 
+        Utils.deleteDirectory("test1");
+        Utils.deleteDirectory("test2");
         Utils.writeStringToFile("junit_example_file_data.txt", "test file contents");
         Utils.deleteFile("Index");
         Utils.deleteDirectory("Objects");
@@ -51,7 +53,8 @@ public class TreeTests {
         Utils.deleteFile("Index");
         Utils.deleteDirectory("Objects");
         Utils.deleteFile("Tree");
-        Utils.deleteDirectory("test");
+        Utils.deleteDirectory("test1");
+        Utils.deleteDirectory("test2");
 
     }
 
@@ -136,10 +139,10 @@ public class TreeTests {
         assertEquals(Utils.writeFileToString("Objects/" + hash5), "YYY");
         assertTrue(Utils.fileExists("Objects/" + hash));
         assertEquals(Utils.writeFileToString("Objects/" + hash),
-                "blob : 97bdfda29cd652224745a552bc6e2f8cb7ab5d16 : bb\n" + //
-                        "blob : d652148cc8af1881cc6a1b041b14449a24e77d3 : aa\n" + //
+                "blob : d652148cc8af1881cc6a1b041b14449a24e77d3 : aa\n" + //
+                        "blob : 97bdfda29cd652224745a552bc6e2f8cb7ab5d16 : bb\n" + //
                         "blob : d34c0b1d281e4879b11710a91d3d9161f092b5bd : cc\n" + //
-                        "tree : 1f34cc55024356cec15c25c621fb8eeb2b33c000 : fold2\n" + //
-                        "tree : 46aeee1299fa4040e341f05a9bc3191d54c55126 : fold1");
+                        "tree : 46aeee1299fa4040e341f05a9bc3191d54c55126 : fold1\n" + //
+                        "tree : 1f34cc55024356cec15c25c621fb8eeb2b33c000 : fold2");
     }
 }

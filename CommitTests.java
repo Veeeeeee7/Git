@@ -26,7 +26,7 @@ public class CommitTests {
     void testGetDate() throws Exception {
         Commit commit = new Commit("someParents", "author claire", "this is for testing");
         String actaul = commit.getDate();
-        String expected = "2023-09-29";
+        String expected = "2023-10-01";
         assertEquals(expected, actaul);
     }
 
@@ -37,6 +37,7 @@ public class CommitTests {
         c.setNextCommit("next commit");
         assertTrue("the right file isn't created", Utils.fileExists("objects/" + hash));
         assertEquals("the right file contents aren't there", Utils.writeFileToString("objects/" + hash),
-                "da39a3ee5e6b4b0d3255bfef95601890afd80709\nparent commit\nnext commit\nauthor\n2023-09-29\nsummary");
+                "da39a3ee5e6b4b0d3255bfef95601890afd80709\nparent commit\nnext commit\nauthor\n" + c.getDate()
+                        + "\nsummary");
     }
 }

@@ -75,7 +75,7 @@ public class Index {
         while (br.ready()) {
             String line = br.readLine();
             String check = "";
-            check = line.substring(43);
+            check = line.substring(50);
             if (!check.equals(fileName)) {
                 if (sb.toString().equals(""))
                     sb.append(line);
@@ -129,7 +129,7 @@ public class Index {
         } catch (Exception e) {
             System.out.println("cant create Index");
         }
-        removeNewLine();
+        // removeNewLine();
     }
 
     private void addDirectory(String fileName) throws Exception {

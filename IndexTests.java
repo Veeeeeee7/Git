@@ -40,7 +40,7 @@ public class IndexTests {
         Index ind = new Index();
         ind.add("testv");
 
-        String expectedResult = "cbaedccfded0c768295aae27c8e5b3a0025ef340 : testv";
+        String expectedResult = "blob : cbaedccfded0c768295aae27c8e5b3a0025ef340 : testv";
         String index = Utils.writeFileToString("Index");
 
         assertEquals("Added to index incorrectly", expectedResult, index);
@@ -67,7 +67,7 @@ public class IndexTests {
 
         ind.remove("testv");
 
-        String expectedResult = "aaf4c61ddcc5e8a2dabede0f3b482cd9aea9434d : testv2";
+        String expectedResult = "blob : aaf4c61ddcc5e8a2dabede0f3b482cd9aea9434d : testv2";
         String indexContents = Utils.writeFileToString("Index");
 
         assertEquals("Did not remove correctly", expectedResult, indexContents);

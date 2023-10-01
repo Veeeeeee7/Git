@@ -110,4 +110,8 @@ public class Commit {
         // System.out.println(dateFormat.format(date));
         return dateFormat.format(date);
     }
+
+    public String getTreeHash() {
+        return treeSHA1;
+    }
 }

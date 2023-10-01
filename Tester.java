@@ -3,11 +3,12 @@ import java.io.IOException;
 
 public class Tester {
     public static void main(String[] args) throws Exception {
-        Index i = new Index();
-        i.add("Blob.java");
-        i.add("Tree.java");
-        Commit c = new Commit("parent", "author", "summary");
-        c.createCommit();
+        // Index i = new Index();
+        // i.add("Blob.java");
+        // i.add("Tree.java");
+        // Commit c = new Commit("parent", "author", "summary");
+        // c.createCommit();
+        // System.out.println(c.getTreeHash());
         // Index ind = new Index();
         // Utils.writeStringToFile("testv", "test file contents");
         // Utils.writeStringToFile("testv2", "hello");

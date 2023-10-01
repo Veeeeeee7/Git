@@ -16,10 +16,12 @@ public class CommitTests {
     @BeforeAll
     static void setUp() throws Exception {
         Index index = new Index();
+        index.init();
         Utils.writeStringToFile("testFile1", "testttt");
         Utils.writeStringToFile("testFile2", "TESTTJKFLGJL:KJ");
-        index.add("testFile1");
-        index.add("testFile2");
+        Utils.createDirectory("testFolder1");
+        Utils.writeStringToFile("testFolder1/testFile1-1", "t;kljfb");
+        Utils.writeStringToFile("testFolder1/testFile1-2", "BLKIEUY");
     }
 
     @AfterAll
@@ -32,6 +34,9 @@ public class CommitTests {
 
     @Test
     void testCreateCommit() throws Exception {
+        Index index = new Index();
+        index.add("testFile1");
+        index.add("testFile2");
         Commit commit = new Commit("someParents", "author claire", "this is for testing");
         commit.createCommit();
         Path path = Paths.get("Objects");
@@ -42,6 +47,9 @@ public class CommitTests {
 
     @Test
     void testGetDate() throws Exception {
+        Index index = new Index();
+        index.add("testFile1");
+        index.add("testFile2");
         Commit commit = new Commit("someParents", "author claire", "this is for testing");
         String actaul = commit.getDate();
         String expected = "2023-10-01";
@@ -50,6 +58,9 @@ public class CommitTests {
 
     @Test
     void testSetNextCommit() throws Exception {
+        Index index = new Index();
+        index.add("testFile1");
+        index.add("testFile2");
         Commit c = new Commit("parent commit", "author", "summary");
         String hash = c.createCommit();
         c.setNextCommit("next commit");
@@ -61,6 +72,9 @@ public class CommitTests {
 
     @Test
     void test1Commit() throws Exception {
+        Index index = new Index();
+        index.add("testFile1");
+        index.add("testFile2");
         Commit c = new Commit("", "AUTHOR", "BEST SUMMARY");
         String hash = c.createCommit();
         assertTrue("the right file isn't created", Utils.fileExists("objects/" + hash));
@@ -71,6 +85,14 @@ public class CommitTests {
 
     @Test
     void test2Commits() throws Exception {
-
+        Index index = new Index();
+        index.add("testFile1");
+        index.add("testFile2");
+        Commit c1 = new Commit("", "AUTHOR", "first commit");
+        String hash1 = c1.createCommit();
+        index.add("testFolder1");
+        Commit c2 = new Commit(hash1, "AUTHOR", "second commit");
+        String hash2 = c2.createCommit();
+        c1.setNextCommit(hash2);
     }
 }

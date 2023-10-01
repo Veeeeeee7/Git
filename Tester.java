@@ -4,13 +4,28 @@ import java.io.IOException;
 public class Tester {
     public static void main(String[] args) throws Exception {
         Index index = new Index();
-        // index.init();
+        index.init();
         Utils.writeStringToFile("testFile1", "testttt");
         Utils.writeStringToFile("testFile2", "TESTTJKFLGJL:KJ");
+        Utils.createDirectory("testFolder1");
+        Utils.writeStringToFile("testFolder1/testFile1-1", "t;kljfb");
+        Utils.writeStringToFile("testFolder1/testFile1-2", "BLKIEUY");
+
+        index.add("testFile1");
+        index.add("testFile2");
+        Commit c1 = new Commit("", "AUTHOR", "first commit");
+        String hash1 = c1.createCommit();
+        index.add("testFolder1");
+        Commit c2 = new Commit(hash1, "AUTHOR", "second commit");
+        String hash2 = c2.createCommit();
+        c1.setNextCommit(hash2);
+        // index.init();
+        // Utils.writeStringToFile("testFile1", "testttt");
+        // Utils.writeStringToFile("testFile2", "TESTTJKFLGJL:KJ");
         // index.add("testFile1");
         // index.add("lib");
         // index.remove("lib");
-        index.add("Tree.java");
+        // index.add("Tree.java");
         // Commit commit = new Commit("someParents", "author claire", "this is for
         // testing");
         // commit.createCommit();

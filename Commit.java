@@ -76,7 +76,11 @@ public class Commit {
         for (int i = 0; i < content.length; i++) {
             tree.add(content[i]);
         }
-        tree.add("tree : " + parentCommit);
+        if (parentCommit.length() > 0) {
+            String parentContent = Utils.writeFileToString("Objects/" + parentCommit);
+            String parentTree = parentContent.substring(0, parentContent.indexOf("\n"));
+            tree.add("tree : " + parentTree);
+        }
         tree.finalize();
         Index.clearContent();
         treeSHA1 = tree.getSHA1();

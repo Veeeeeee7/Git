@@ -8,9 +8,27 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 public class CommitTests {
+    @BeforeAll
+    static void setUp() throws Exception {
+        Index index = new Index();
+        Utils.writeStringToFile("testFile1", "testttt");
+        Utils.writeStringToFile("testFile2", "TESTTJKFLGJL:KJ");
+        index.add("testFile1");
+        index.add("testFile2");
+    }
+
+    @AfterAll
+    static void cleanUp() {
+        Utils.deleteDirectory("Objects");
+        Utils.deleteFile("Index");
+        Utils.deleteFile("testFile1");
+        Utils.deleteFile("testFile2");
+    }
 
     @Test
     void testCreateCommit() throws Exception {
@@ -18,7 +36,7 @@ public class CommitTests {
         commit.createCommit();
         Path path = Paths.get("Objects");
         assertTrue(Files.exists(path));
-        File file = new File("Objects/5a1f5a7c2b9a1bed276bafb2b2f4c68842842a18");
+        File file = new File("Objects/84438138416e20a2f51fc75aaded42ea22e15082");
         assertTrue(file.exists());
     }
 
@@ -37,7 +55,22 @@ public class CommitTests {
         c.setNextCommit("next commit");
         assertTrue("the right file isn't created", Utils.fileExists("objects/" + hash));
         assertEquals("the right file contents aren't there", Utils.writeFileToString("objects/" + hash),
-                "da39a3ee5e6b4b0d3255bfef95601890afd80709\nparent commit\nnext commit\nauthor\n" + c.getDate()
+                c.getTreeHash() + "\nparent commit\nnext commit\nauthor\n" + c.getDate()
                         + "\nsummary");
+    }
+
+    @Test
+    void test1Commit() throws Exception {
+        Commit c = new Commit("", "AUTHOR", "BEST SUMMARY");
+        String hash = c.createCommit();
+        assertTrue("the right file isn't created", Utils.fileExists("objects/" + hash));
+        assertEquals("the right file contents aren't there", Utils.writeFileToString("objects/" + hash),
+                c.getTreeHash() + "\n\n\nAUTHOR\n" + c.getDate()
+                        + "\nBEST SUMMARY");
+    }
+
+    @Test
+    void test2Commits() throws Exception {
+
     }
 }

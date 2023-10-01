@@ -3,6 +3,17 @@ import java.io.IOException;
 
 public class Tester {
     public static void main(String[] args) throws Exception {
+        Index index = new Index();
+        // index.init();
+        Utils.writeStringToFile("testFile1", "testttt");
+        Utils.writeStringToFile("testFile2", "TESTTJKFLGJL:KJ");
+        // index.add("testFile1");
+        // index.add("lib");
+        // index.remove("lib");
+        index.add("Tree.java");
+        // Commit commit = new Commit("someParents", "author claire", "this is for
+        // testing");
+        // commit.createCommit();
         // Index i = new Index();
         // i.add("Blob.java");
         // i.add("Tree.java");

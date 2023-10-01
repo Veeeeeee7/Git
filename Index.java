@@ -8,16 +8,17 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Stack;
 
 public class Index {
-    protected ArrayList<String> fileNames;
-    protected HashMap<String, String> index;
+    // protected ArrayList<String> fileNames;
+    // protected HashSet<String> index;
     protected StringBuilder content = new StringBuilder();
 
     public Index() {
-        index = new HashMap<String, String>();
-        fileNames = new ArrayList<>();
+        // index = new HashSet<String>();
+        // fileNames = new ArrayList<>();
         // File folder = new File(".");
         // fileNames = folder.list(new FilenameFilter() {
         // @Override
@@ -33,9 +34,9 @@ public class Index {
         Utils.createFile("Index");
         File objects = new File("Objects");
         objects.mkdir();
-        if (index.isEmpty()) {
-            return;
-        }
+        // if (index.isEmpty()) {
+        // return;
+        // }
         // for (String f : fileNames) {
         // File file = new File(f);
         // Blob blob = new Blob(file);
@@ -44,26 +45,26 @@ public class Index {
         // index.put(hash, f);
         // }
 
-        try {
-            File indexFile = new File("Index");
-            // if (!indexFile.exists()) {
-            // indexFile.createNewFile();
-            // }
-            FileWriter writer = new FileWriter(indexFile);
-            // StringBuilder str = new StringBuilder();
-            // for (String hash : this.index.keySet()) {
-            // content.append(hash + " : ");
-            // content.append(index.get(hash));
-            // content.delete(content.length() - 2, content.length());
-            // content.append("\n");
-            // }
-            // content.deleteCharAt(content.length() - 1);
+        // try {
+        // File indexFile = new File("Index");
+        // // if (!indexFile.exists()) {
+        // // indexFile.createNewFile();
+        // // }
+        // FileWriter writer = new FileWriter(indexFile);
+        // // StringBuilder str = new StringBuilder();
+        // // for (String hash : this.index.keySet()) {
+        // // content.append(hash + " : ");
+        // // content.append(index.get(hash));
+        // // content.delete(content.length() - 2, content.length());
+        // // content.append("\n");
+        // // }
+        // // content.deleteCharAt(content.length() - 1);
 
-            writer.write(content.toString());
-            writer.close();
-        } catch (Exception e) {
-            System.out.println("cant create Index");
-        }
+        // writer.write(content.toString());
+        // writer.close();
+        // } catch (Exception e) {
+        // System.out.println("cant create Index");
+        // }
     }
 
     public static void clearContent() {
@@ -75,10 +76,10 @@ public class Index {
     }
 
     public void remove(String fileName) throws IOException {
-        fileNames.remove(fileName);
+        // fileNames.remove(fileName);
         StringBuilder sb = new StringBuilder();
         BufferedReader br = new BufferedReader(new FileReader("Index"));
-        String filename = "";
+        // String filename = "";
 
         while (br.ready()) {
             String line = br.readLine();
@@ -100,6 +101,13 @@ public class Index {
     }
 
     public void add(String fileName) throws Exception {
+        // fileNames.add(fileName);
+        updateContent();
+        String temp = content.toString() + "\n";
+        if (temp.contains(fileName + "\n")) {
+            return;
+        }
+
         File f = new File(fileName);
         if (f.isFile()) {
             addFile(fileName);
@@ -108,8 +116,8 @@ public class Index {
         }
     }
 
-    public void addFile(String fileName) throws IOException {
-        fileNames.add(fileName);
+    private void addFile(String fileName) throws IOException {
+        // fileNames.add(fileName);
         File file = new File(fileName);
         Blob blob = new Blob(file);
         String hash = blob.hash;
@@ -123,7 +131,8 @@ public class Index {
         // index.put(hash, stack);
         // content.append(hash + " : " + fileName + "\n");
         // }
-        index.put(hash, fileName);
+        // index.put(hash, fileName);
+
         if (!content.isEmpty()) {
             content.append("\n");
         }
@@ -143,6 +152,9 @@ public class Index {
     private void addDirectory(String fileName) throws Exception {
         Tree t = new Tree();
         String treeHash = t.addDirectory(fileName);
+        if (!content.isEmpty()) {
+            content.append("\n");
+        }
         content.append("tree : " + treeHash + " : " + fileName);
         try {
             File indexFile = new File("Index");
@@ -152,24 +164,36 @@ public class Index {
         } catch (Exception e) {
             System.out.println("cant create Index");
         }
-        removeNewLine();
+        // removeNewLine();
     }
 
-    public void removeNewLine() throws IOException {
+    // public void removeNewLine() throws IOException {
+    // StringBuilder sb = new StringBuilder();
+    // BufferedReader br = new BufferedReader(new FileReader("Index"));
+
+    // while (br.ready()) {
+    // char c = (char) br.read();
+    // if (br.ready())
+    // sb.append(c);
+    // else
+    // break;
+    // }
+
+    // FileWriter fw = new FileWriter("Index");
+    // fw.write(sb.toString());
+    // fw.close();
+    // }
+
+    private void updateContent() throws Exception {
+        String contents = Utils.writeFileToString("Index");
+        String[] lines = contents.split("\n");
         StringBuilder sb = new StringBuilder();
-        BufferedReader br = new BufferedReader(new FileReader("Index"));
-
-        while (br.ready()) {
-            char c = (char) br.read();
-            if (br.ready())
-                sb.append(c);
-            else
-                break;
+        for (int i = 0; i < lines.length; i++) {
+            sb.append(lines[i]);
+            sb.append("\n");
         }
-
-        FileWriter fw = new FileWriter("Index");
-        fw.write(sb.toString());
-        fw.close();
+        sb.deleteCharAt(sb.length() - 1);
+        content = sb;
     }
 
     // public void removeIndex() throws IOException {

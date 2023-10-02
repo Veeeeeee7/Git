@@ -114,15 +114,15 @@ public class TreeTests {
         assertTrue(Utils.fileExists("Objects/" + hash));
         assertEquals(Utils.writeFileToString("Objects/" + hash),
                 "blob : 581fd1622f7174405f03bea4a099538e7f253671 : ab\n" + //
-                        "blob : 77f721df21a2d0b314694c692fd017d68350fd54 : ef\n" + //
-                        "blob : 43b0b7d9b8f99e369478bda2399f1ac98d124fd4 : cd");
+                        "blob : 43b0b7d9b8f99e369478bda2399f1ac98d124fd4 : cd\n" + //
+                        "blob : 77f721df21a2d0b314694c692fd017d68350fd54 : ef");
     }
 
     @Test
     void testAddDirectoryAdvanced() throws Exception {
         Tree tree = new Tree();
         String hash = tree.addDirectory("test2");
-        String hash1 = Utils.sha1("BOB");
+        String hash1 = Utils.sha1("BOA");
         String hash2 = Utils.sha1("WAB");
         String hash3 = Utils.sha1("OOO");
         String hash4 = Utils.sha1("DUO");
@@ -132,7 +132,7 @@ public class TreeTests {
         assertTrue(Utils.fileExists("Objects/" + hash3));
         assertTrue(Utils.fileExists("Objects/" + hash4));
         assertTrue(Utils.fileExists("Objects/" + hash5));
-        assertEquals(Utils.writeFileToString("Objects/" + hash1), "BOB");
+        assertEquals(Utils.writeFileToString("Objects/" + hash1), "BOA");
         assertEquals(Utils.writeFileToString("Objects/" + hash2), "WAB");
         assertEquals(Utils.writeFileToString("Objects/" + hash3), "OOO");
         assertEquals(Utils.writeFileToString("Objects/" + hash4), "DUO");

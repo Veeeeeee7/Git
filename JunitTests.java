@@ -57,6 +57,7 @@ public class JunitTests {
         File file1 = new File("file1");
         Utils.writeStringToFile("file1", "hello");
         Blob blob = new Blob(file1);
+        blob.createBlob();
 
         // Check blob exists in the objects folder
         File file_junit1 = new File("Objects/" + blob.getHash());
@@ -71,12 +72,14 @@ public class JunitTests {
     @Test
     @DisplayName("Testing if add to tree works")
     void testAddToTree() throws FileNotFoundException, IOException, URISyntaxException {
+        File f = new File("Tree");
+        f.delete();
+        f.createNewFile();
         Tree tree = new Tree();
 
         tree.add("hello");
         tree.add("hi");
 
-        File f = new File("Tree");
         Blob blob = new Blob(f);
         String sha1 = blob.getHash();
         Path path = Paths.get("Objects/" + sha1);
@@ -107,5 +110,10 @@ public class JunitTests {
         String treeContents = Utils.writeFileToString("Tree");
         assertEquals(treeContents,
                 "blob : 22343k2jn2njijfinein322i3n3in3i333in3333 : blok.txt\nblob : 1263746536521765436527635421890jvncdeixs : 2i3nkd");
+    }
+
+    @Test
+    void test() {
+        Utils.deleteFile("Tree");
     }
 }

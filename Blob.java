@@ -56,6 +56,8 @@ public class Blob {
     public String createBlob() {
         try {
             // String compressed = compress();
+            File folder = new File("Objects");
+            folder.mkdir();
             File blob = new File("Objects/" + hash);
             if (!blob.exists()) {
                 blob.createNewFile();

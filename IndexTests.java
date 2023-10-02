@@ -38,6 +38,7 @@ public class IndexTests {
     void testAdd() throws Exception {
 
         Index ind = new Index();
+        ind.init();
         ind.add("testv");
 
         String expectedResult = "blob : cbaedccfded0c768295aae27c8e5b3a0025ef340 : testv";

@@ -28,6 +28,7 @@ public class BlobTests {
         File file1 = new File("file1");
         Utils.writeStringToFile("file1", "hello");
         Blob blob = new Blob(file1);
+        blob.createBlob();
 
         // Check blob exists in the objects folder
         File file_junit1 = new File("Objects/aaf4c61ddcc5e8a2dabede0f3b482cd9aea9434d");

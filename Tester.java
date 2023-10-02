@@ -1,3 +1,4 @@
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
@@ -10,6 +11,11 @@ public class Tester {
         Utils.createDirectory("testFolder1");
         Utils.writeStringToFile("testFolder1/testFile1-1", "t;kljfb");
         Utils.writeStringToFile("testFolder1/testFile1-2", "BLKIEUY");
+        Utils.writeStringToFile("testFile3", "ajmjkmkm5t5");
+        Utils.writeStringToFile("testFile4", "aer:KJ");
+        Utils.createDirectory("testFolder2");
+        Utils.writeStringToFile("testFolder2/testFile2-1", "dgjndghj");
+        Utils.writeStringToFile("testFolder2/testFile2-2", "aerh");
 
         index.add("testFile1");
         index.add("testFile2");
@@ -19,6 +25,34 @@ public class Tester {
         Commit c2 = new Commit(hash1, "AUTHOR", "second commit");
         String hash2 = c2.createCommit();
         c1.setNextCommit(hash2);
+        index.add("testFile3");
+        index.add("testFile4");
+        Commit c3 = new Commit(hash2, "AUTHOR", "third commit");
+        String hash3 = c3.createCommit();
+        c2.setNextCommit(hash3);
+        index.add("testFolder2");
+        Commit c4 = new Commit(hash3, "AUTHOR", "fourth commit");
+        String hash4 = c4.createCommit();
+        c3.setNextCommit(hash4);
+
+        File file = new File("temp");
+        file.delete();
+        // Index index = new Index();
+        // index.init();
+        // Utils.writeStringToFile("testFile1", "testttt");
+        // Utils.writeStringToFile("testFile2", "TESTTJKFLGJL:KJ");
+        // Utils.createDirectory("testFolder1");
+        // Utils.writeStringToFile("testFolder1/testFile1-1", "t;kljfb");
+        // Utils.writeStringToFile("testFolder1/testFile1-2", "BLKIEUY");
+
+        // index.add("testFile1");
+        // index.add("testFile2");
+        // Commit c1 = new Commit("", "AUTHOR", "first commit");
+        // String hash1 = c1.createCommit();
+        // index.add("testFolder1");
+        // Commit c2 = new Commit(hash1, "AUTHOR", "second commit");
+        // String hash2 = c2.createCommit();
+        // c1.setNextCommit(hash2);
         // index.init();
         // Utils.writeStringToFile("testFile1", "testttt");
         // Utils.writeStringToFile("testFile2", "TESTTJKFLGJL:KJ");

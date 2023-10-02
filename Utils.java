@@ -30,8 +30,16 @@ public class Utils {
     }
 
     public static void deleteDirectory(String f) {
-        File file = new File(f);
-        file.delete();
+        File directory = new File(f);
+        File[] files = directory.listFiles();
+        if (files == null) {
+            directory.delete();
+            return;
+        }
+        for (File file : files) {
+            file.delete();
+        }
+        directory.delete();
     }
 
     public static void createFile(String fileName) {

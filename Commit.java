@@ -8,6 +8,7 @@ import java.nio.file.Paths;
 import java.security.MessageDigest;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.LinkedList;
@@ -20,6 +21,7 @@ public class Commit {
     private String summary;
     private String author;
     private String fileHash;
+    private ArrayList<String> oldFiles;
 
     public Commit(String parentCommit, String author, String summary) throws Exception {
         this.parentCommit = parentCommit;
@@ -53,10 +55,13 @@ public class Commit {
     }
 
     public void deleteFile(String fileName) throws Exception {
+        oldFiles = new ArrayList<>();
         String commitContents = Utils.writeFileToString("Objects/" + fileHash);
         String treeHash = commitContents.substring(0, 40);
         String lastTreeHash = findTree(treeHash, fileName);
-        System.out.println(lastTreeHash);
+        for (String file : oldFiles) {
+            System.out.println(file);
+        }
     }
 
     private String findTree(String treeHash, String fileName) throws Exception {
@@ -64,12 +69,14 @@ public class Commit {
         String[] treeLines = treeContents.split("\n");
         for (String line : treeLines) {
             if (line.contains(fileName)) {
+                oldFiles.add(treeLines[treeLines.length - 1]);
                 return treeHash;
+            } else if (line.startsWith("blob")) {
+                oldFiles.add(line);
             }
         }
         String lastTreeHash = findTree(treeLines[treeLines.length - 1].substring(7), fileName);
         return lastTreeHash;
-
     }
 
     public void setNextCommit(String next) throws Exception {

@@ -19,9 +19,9 @@ public class Tester {
         c2.setNextCommit(c3Hash);
         i.add("testFile4");
         Commit c4 = new Commit(c3Hash, "AUTHOR", "FOURTH COMMIT");
+        c4.deleteFile("testFile2");
         String c4Hash = c4.createCommit();
         c3.setNextCommit(c4Hash);
-        c4.deleteFile("testFile2");
         // Index index = new Index();
         // index.init();
         // Utils.writeStringToFile("testFile1", "testttt");

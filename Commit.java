@@ -27,10 +27,19 @@ public class Commit {
         this.parentCommit = parentCommit;
         this.summary = summary;
         this.author = author;
+        this.oldFiles = new ArrayList<>();
         createTree();
     }
 
     public String createCommit() throws Exception {
+        if (!oldFiles.isEmpty()) {
+            Tree t = new Tree();
+            for (String line : oldFiles) {
+                t.add(line);
+            }
+            t.finalize();
+            treeSHA1 = t.getSHA1();
+        }
         createFile();
         File file = new File("temp");
         File path = new File("Objects");
@@ -56,11 +65,10 @@ public class Commit {
 
     public void deleteFile(String fileName) throws Exception {
         oldFiles = new ArrayList<>();
-        String commitContents = Utils.writeFileToString("Objects/" + fileHash);
-        String treeHash = commitContents.substring(0, 40);
-        String lastTreeHash = findTree(treeHash, fileName);
-        for (String file : oldFiles) {
-            System.out.println(file);
+        String treeHash = treeSHA1;
+        findTree(treeHash, fileName);
+        for (String line : oldFiles) {
+            System.out.println(line);
         }
     }
 

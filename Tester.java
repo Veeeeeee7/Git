@@ -4,6 +4,23 @@ import java.io.IOException;
 
 public class Tester {
     public static void main(String[] args) throws Exception {
+        Index i = new Index();
+        i.add("testFile1");
+        Commit c1 = new Commit("", "AUTHOR", "FIRST COMMIT");
+        String c1Hash = c1.createCommit();
+        i.add("testFile2");
+        Commit c2 = new Commit(c1Hash, "AUTHOR", "SECOND COMMIT");
+        String c2Hash = c2.createCommit();
+        c1.setNextCommit(c2Hash);
+        i.add("testFile3");
+        Commit c3 = new Commit(c2Hash, "AUTHOR", "THIRD COMMIT");
+        String c3Hash = c3.createCommit();
+        c2.setNextCommit(c3Hash);
+        i.add("testFile4");
+        Commit c4 = new Commit(c3Hash, "AUTHOR", "FOURTH COMMIT");
+        String c4Hash = c4.createCommit();
+        c3.setNextCommit(c4Hash);
+        c4.deleteFile("testFile2");
         // Index index = new Index();
         // index.init();
         // Utils.writeStringToFile("testFile1", "testttt");

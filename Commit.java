@@ -52,6 +52,26 @@ public class Commit {
         return hash;
     }
 
+    public void deleteFile(String fileName) throws Exception {
+        String commitContents = Utils.writeFileToString("Objects/" + fileHash);
+        String treeHash = commitContents.substring(0, 40);
+        String lastTreeHash = findTree(treeHash, fileName);
+        System.out.println(lastTreeHash);
+    }
+
+    private String findTree(String treeHash, String fileName) throws Exception {
+        String treeContents = Utils.writeFileToString("Objects/" + treeHash);
+        String[] treeLines = treeContents.split("\n");
+        for (String line : treeLines) {
+            if (line.contains(fileName)) {
+                return treeHash;
+            }
+        }
+        String lastTreeHash = findTree(treeLines[treeLines.length - 1].substring(7), fileName);
+        return lastTreeHash;
+
+    }
+
     public void setNextCommit(String next) throws Exception {
         nextCommit = next;
         String content = getContentWithThirdLine();

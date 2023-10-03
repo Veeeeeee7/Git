@@ -83,9 +83,17 @@ public class Index {
 
         while (br.ready()) {
             String line = br.readLine();
-            String check = "";
-            check = line.substring(50);
-            if (!check.equals(fileName)) {
+            // String check = "";
+            // check = line.substring(50);
+            // if (!check.equals(fileName)) {
+            // if (sb.toString().equals(""))
+            // sb.append(line);
+            // else {
+            // String s = '\n' + line;
+            // sb.append(s);
+            // }
+            // }
+            if (!line.contains(" " + fileName)) {
                 if (sb.toString().equals(""))
                     sb.append(line);
                 else {
@@ -98,6 +106,12 @@ public class Index {
         pw.print(sb);
         pw.close();
         br.close();
+    }
+
+    public void deleteFile(String fileName) throws Exception {
+        updateContent();
+        content.append("\n*deleted* " + fileName);
+        Utils.writeStringToFile("Index", content.toString());
     }
 
     public void add(String fileName) throws Exception {

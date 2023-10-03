@@ -4,7 +4,13 @@ import java.io.IOException;
 
 public class Tester {
     public static void main(String[] args) throws Exception {
+        // Index i = new Index();
+        // i.clearContent();
+        // i.add("Blob.java");
+        // i.delete("deleted file name");
+
         Index i = new Index();
+        i.clearContent();
         i.add("testFile1");
         Commit c1 = new Commit("", "AUTHOR", "FIRST COMMIT");
         String c1Hash = c1.createCommit();
@@ -18,10 +24,12 @@ public class Tester {
         String c3Hash = c3.createCommit();
         c2.setNextCommit(c3Hash);
         i.add("testFile4");
+        i.deleteFile("testFile2");
+        i.deleteFile("testFile4");
         Commit c4 = new Commit(c3Hash, "AUTHOR", "FOURTH COMMIT");
-        c4.deleteFile("testFile2");
         String c4Hash = c4.createCommit();
         c3.setNextCommit(c4Hash);
+
         // Index index = new Index();
         // index.init();
         // Utils.writeStringToFile("testFile1", "testttt");

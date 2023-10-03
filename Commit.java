@@ -22,23 +22,29 @@ public class Commit {
     private String author;
     private String fileHash;
     private ArrayList<String> oldFiles;
+    private ArrayList<String> filesToRemove;
 
     public Commit(String parentCommit, String author, String summary) throws Exception {
         this.parentCommit = parentCommit;
         this.summary = summary;
         this.author = author;
         this.oldFiles = new ArrayList<>();
+        this.filesToRemove = new ArrayList<>();
         createTree();
     }
 
     public String createCommit() throws Exception {
-        if (!oldFiles.isEmpty()) {
-            Tree t = new Tree();
-            for (String line : oldFiles) {
-                t.add(line);
+        if (!filesToRemove.isEmpty()) {
+            for (String file : filesToRemove) {
+                deleteFile(file);
+                Tree t = new Tree();
+                for (String line : oldFiles) {
+                    t.add(line);
+                }
+                t.finalize();
+                Utils.deleteFile(treeSHA1);
+                treeSHA1 = t.getSHA1();
             }
-            t.finalize();
-            treeSHA1 = t.getSHA1();
         }
         createFile();
         File file = new File("temp");
@@ -63,7 +69,7 @@ public class Commit {
         return hash;
     }
 
-    public void deleteFile(String fileName) throws Exception {
+    private void deleteFile(String fileName) throws Exception {
         oldFiles = new ArrayList<>();
         String treeHash = treeSHA1;
         findTree(treeHash, fileName);
@@ -111,7 +117,13 @@ public class Commit {
         String indexContent = Utils.writeFileToString("Index");
         String[] content = indexContent.split("\n");
         for (int i = 0; i < content.length; i++) {
-            tree.add(content[i]);
+            if (content[i].startsWith("*deleted*")) {
+                Index index = new Index();
+                index.remove(content[i].substring(10));
+                filesToRemove.add(content[i].substring(10));
+            } else {
+                tree.add(content[i]);
+            }
         }
         if (parentCommit.length() > 0) {
             String parentContent = Utils.writeFileToString("Objects/" + parentCommit);

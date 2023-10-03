@@ -25,7 +25,7 @@ public class Tester {
         c2.setNextCommit(c3Hash);
         i.add("testFile4");
         i.deleteFile("testFile2");
-        i.deleteFile("testFile1");
+        // i.deleteFile("testFolder1");
         Commit c4 = new Commit(c3Hash, "AUTHOR", "FOURTH COMMIT");
         String c4Hash = c4.createCommit();
         c3.setNextCommit(c4Hash);

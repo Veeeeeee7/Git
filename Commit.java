@@ -67,12 +67,14 @@ public class Commit {
     private String findTree(String treeHash, String fileName) throws Exception {
         String treeContents = Utils.writeFileToString("Objects/" + treeHash);
         String[] treeLines = treeContents.split("\n");
-        for (String line : treeLines) {
-            if (line.contains(fileName)) {
-                oldFiles.add(treeLines[treeLines.length - 1]);
+        for (int i = 0; i < treeLines.length; i++) {
+            if (treeLines[i].contains(fileName)) {
+                for (int j = i + 1; j < treeLines.length; j++) {
+                    oldFiles.add(treeLines[j]);
+                }
                 return treeHash;
-            } else if (line.startsWith("blob")) {
-                oldFiles.add(line);
+            } else if (treeLines[i].startsWith("blob")) {
+                oldFiles.add(treeLines[i]);
             }
         }
         String lastTreeHash = findTree(treeLines[treeLines.length - 1].substring(7), fileName);

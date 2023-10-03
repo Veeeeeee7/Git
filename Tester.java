@@ -9,6 +9,7 @@ public class Tester {
         Commit c1 = new Commit("", "AUTHOR", "FIRST COMMIT");
         String c1Hash = c1.createCommit();
         i.add("testFile2");
+        i.add("BOB.txt");
         Commit c2 = new Commit(c1Hash, "AUTHOR", "SECOND COMMIT");
         String c2Hash = c2.createCommit();
         c1.setNextCommit(c2Hash);

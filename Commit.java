@@ -85,7 +85,6 @@ public class Commit {
         String[] treeLines = treeContents.split("\n");
         String lastTreeHash = "";
         for (int i = 0; i < treeLines.length; i++) {
-
             if (treeLines[i].startsWith("blob")) {
                 if (treeLines[i].substring(50).equals(fileName)) {
                     for (int j = i + 1; j < treeLines.length; j++) {
@@ -97,6 +96,11 @@ public class Commit {
             } else if (i == treeLines.length - 1 && !(treeLines[i].length() == 48)) {
                 lastTreeHash = findTree(treeLines[i].substring(7), fileName);
 
+            } else if (treeLines[i].substring(50).equals(fileName)) {
+                for (int j = i + 1; j < treeLines.length; j++) {
+                    oldFiles.add(treeLines[j]);
+                }
+                return treeHash;
             } else {
                 lastTreeHash = findTree(treeLines[i].substring(7, treeLines[i].substring(7).indexOf(" ") + 7),
                         fileName);

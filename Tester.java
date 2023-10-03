@@ -8,14 +8,14 @@ public class Tester {
         // i.clearContent();
         // i.add("Blob.java");
         // i.delete("deleted file name");
-
+        // Utils.deleteDirectory("Objects");
         Index i = new Index();
         i.clearContent();
         i.add("testFile1");
         Commit c1 = new Commit("", "AUTHOR", "FIRST COMMIT");
         String c1Hash = c1.createCommit();
         i.add("testFile2");
-        i.add("BOB.txt");
+        i.add("testFolder1");
         Commit c2 = new Commit(c1Hash, "AUTHOR", "SECOND COMMIT");
         String c2Hash = c2.createCommit();
         c1.setNextCommit(c2Hash);
@@ -25,7 +25,7 @@ public class Tester {
         c2.setNextCommit(c3Hash);
         i.add("testFile4");
         i.deleteFile("testFile2");
-        i.deleteFile("testFile3");
+        i.deleteFile("testFile1");
         Commit c4 = new Commit(c3Hash, "AUTHOR", "FOURTH COMMIT");
         String c4Hash = c4.createCommit();
         c3.setNextCommit(c4Hash);

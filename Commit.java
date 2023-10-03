@@ -42,7 +42,7 @@ public class Commit {
                     t.add(line);
                 }
                 t.finalize();
-                Utils.deleteFile(treeSHA1);
+                Utils.deleteFile("Objects/" + treeSHA1);
                 treeSHA1 = t.getSHA1();
             }
         }
@@ -72,26 +72,39 @@ public class Commit {
     private void deleteFile(String fileName) throws Exception {
         oldFiles = new ArrayList<>();
         String treeHash = treeSHA1;
+        System.out.println(treeHash);
         findTree(treeHash, fileName);
         for (String line : oldFiles) {
             System.out.println(line);
         }
+        System.out.println("\n\n");
     }
 
     private String findTree(String treeHash, String fileName) throws Exception {
         String treeContents = Utils.writeFileToString("Objects/" + treeHash);
         String[] treeLines = treeContents.split("\n");
+        String lastTreeHash = "";
         for (int i = 0; i < treeLines.length; i++) {
-            if (treeLines[i].contains(fileName)) {
-                for (int j = i + 1; j < treeLines.length; j++) {
-                    oldFiles.add(treeLines[j]);
+
+            if (treeLines[i].startsWith("blob")) {
+                if (treeLines[i].substring(50).equals(fileName)) {
+                    for (int j = i + 1; j < treeLines.length; j++) {
+                        oldFiles.add(treeLines[j]);
+                    }
+                    return treeHash;
                 }
-                return treeHash;
-            } else if (treeLines[i].startsWith("blob")) {
                 oldFiles.add(treeLines[i]);
+            } else if (i == treeLines.length - 1 && !(treeLines[i].length() == 48)) {
+                lastTreeHash = findTree(treeLines[i].substring(7), fileName);
+
+            } else {
+                lastTreeHash = findTree(treeLines[i].substring(7, treeLines[i].substring(7).indexOf(" ") + 7),
+                        fileName);
+                if (lastTreeHash.equals("")) {
+                    oldFiles.add(treeLines[i]);
+                }
             }
         }
-        String lastTreeHash = findTree(treeLines[treeLines.length - 1].substring(7), fileName);
         return lastTreeHash;
     }
 

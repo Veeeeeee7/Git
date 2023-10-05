@@ -110,7 +110,19 @@ public class Index {
 
     public void deleteFile(String fileName) throws Exception {
         updateContent();
-        content.append("\n*deleted* " + fileName);
+        if (!content.isEmpty()) {
+            content.append("\n");
+        }
+        content.append("*deleted* " + fileName);
+        Utils.writeStringToFile("Index", content.toString());
+    }
+
+    public void editFile(String fileName) throws Exception {
+        updateContent();
+        if (!content.isEmpty()) {
+            content.append("\n");
+        }
+        content.append("*edited* " + fileName);
         Utils.writeStringToFile("Index", content.toString());
     }
 

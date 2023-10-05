@@ -23,6 +23,7 @@ public class Commit {
     private String fileHash;
     private ArrayList<String> oldFiles;
     private ArrayList<String> filesToRemove;
+    private ArrayList<String> filesToEdit;
 
     public Commit(String parentCommit, String author, String summary) throws Exception {
         this.parentCommit = parentCommit;
@@ -30,13 +31,25 @@ public class Commit {
         this.author = author;
         this.oldFiles = new ArrayList<>();
         this.filesToRemove = new ArrayList<>();
+        this.filesToEdit = new ArrayList<>();
         createTree();
     }
 
     public String createCommit() throws Exception {
-        if (!filesToRemove.isEmpty()) {
+        if (!filesToRemove.isEmpty() || !filesToEdit.isEmpty()) {
             for (String file : filesToRemove) {
                 deleteFile(file);
+                Tree t = new Tree();
+                for (String line : oldFiles) {
+                    t.add(line);
+                }
+                t.finalize();
+                Utils.deleteFile("Objects/" + treeSHA1);
+                treeSHA1 = t.getSHA1();
+            }
+            for (String file : filesToEdit) {
+
+                editFile(file);
                 Tree t = new Tree();
                 for (String line : oldFiles) {
                     t.add(line);
@@ -67,6 +80,14 @@ public class Commit {
         fileHash = hash;
         file.delete();
         return hash;
+    }
+
+    private void editFile(String fileName) throws Exception {
+        deleteFile(fileName);
+        File f = new File(fileName);
+        Blob b = new Blob(f);
+        b.createBlob();
+        oldFiles.add("blob : " + b.hash + " : " + fileName);
     }
 
     private void deleteFile(String fileName) throws Exception {
@@ -134,10 +155,15 @@ public class Commit {
         String indexContent = Utils.writeFileToString("Index");
         String[] content = indexContent.split("\n");
         for (int i = 0; i < content.length; i++) {
+            // System.out.println(content[i]);
             if (content[i].startsWith("*deleted*")) {
                 Index index = new Index();
                 index.remove(content[i].substring(10));
                 filesToRemove.add(content[i].substring(10));
+            } else if (content[i].startsWith("*edited*")) {
+                Index index = new Index();
+                index.remove(content[i].substring(9));
+                filesToEdit.add(content[i].substring(9));
             } else {
                 tree.add(content[i]);
             }

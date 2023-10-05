@@ -8,7 +8,7 @@ public class Tester {
         // i.clearContent();
         // i.add("Blob.java");
         // i.delete("deleted file name");
-        // Utils.deleteDirectory("Objects");
+        Utils.deleteDirectory("Objects");
         Index i = new Index();
         i.clearContent();
         i.add("testFile1");
@@ -23,12 +23,21 @@ public class Tester {
         Commit c3 = new Commit(c2Hash, "AUTHOR", "THIRD COMMIT");
         String c3Hash = c3.createCommit();
         c2.setNextCommit(c3Hash);
+        Utils.writeStringToFile("testFile4", "OLD STUFF");
         i.add("testFile4");
-        i.deleteFile("testFile2");
+        // i.deleteFile("testFile2");
         // i.deleteFile("testFolder1");
+        // i.deleteFile("testFile1-1");
         Commit c4 = new Commit(c3Hash, "AUTHOR", "FOURTH COMMIT");
         String c4Hash = c4.createCommit();
         c3.setNextCommit(c4Hash);
+
+        Utils.writeStringToFile("testFile4", "NEW STUFF");
+        i.editFile("testFile4");
+
+        Commit c5 = new Commit(c4Hash, "AUTHOR", "FIFTH COMMIT");
+        String c5Hash = c5.createCommit();
+        c4.setNextCommit(c5Hash);
 
         // Index index = new Index();
         // index.init();

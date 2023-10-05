@@ -4,45 +4,83 @@ import java.io.IOException;
 
 public class Tester {
     public static void main(String[] args) throws Exception {
+        //
+
+        // Utils.writeStringToFile("testFile1", "testttt");
+        // Utils.writeStringToFile("testFile2", "TESTTJKFLGJL:KJ");
+        // Utils.createDirectory("testFolder1");
+        // Utils.writeStringToFile("testFolder1/testFile1-1", "t;kljfb");
+        // Utils.writeStringToFile("testFolder1/testFile1-2", "BLKIEUY");
+        // Utils.writeStringToFile("testFile3", "ajmjkmkm5t5");
+        // Utils.writeStringToFile("testFile4", "aer:KJ");
+        // Utils.createDirectory("testFolder2");
+        // Utils.writeStringToFile("testFolder2/testFile2-1", "dgjndghj");
+        // Utils.writeStringToFile("testFolder2/testFile2-2", "aerh");
+
+        // Index index = new Index();
+        // index.init();
+        // index.add("testFile1");
+        // index.add("testFile2");
+        // Commit c1 = new Commit("", "AUTHOR", "first commit");
+        // String hash1 = c1.createCommit();
+        // index.add("testFolder1");
+        // Commit c2 = new Commit(hash1, "AUTHOR", "second commit");
+        // String hash2 = c2.createCommit();
+        // c1.setNextCommit(hash2);
+        // index.add("testFile3");
+        // index.add("testFile4");
+        // Commit c3 = new Commit(hash2, "AUTHOR", "third commit");
+        // String hash3 = c3.createCommit();
+        // c2.setNextCommit(hash3);
+        // index.add("testFolder2");
+        // Commit c4 = new Commit(hash3, "AUTHOR", "fourth commit");
+        // String hash4 = c4.createCommit();
+        // c3.setNextCommit(hash4);
+
+        /*
+         * TESTING CODE FOR DELETING AND EDITING
+         */
+
+        // Utils.deleteDirectory("Objects");
         // Index i = new Index();
         // i.clearContent();
-        // i.add("Blob.java");
-        // i.delete("deleted file name");
-        Utils.deleteDirectory("Objects");
-        Index i = new Index();
-        i.clearContent();
-        i.add("testFile1");
-        Commit c1 = new Commit("", "AUTHOR", "FIRST COMMIT");
-        String c1Hash = c1.createCommit();
-        i.add("testFile2");
-        // i.add("testFolder1");
-        Commit c2 = new Commit(c1Hash, "AUTHOR", "SECOND COMMIT");
-        String c2Hash = c2.createCommit();
-        c1.setNextCommit(c2Hash);
-        i.add("testFile3");
-        Commit c3 = new Commit(c2Hash, "AUTHOR", "THIRD COMMIT");
-        String c3Hash = c3.createCommit();
-        c2.setNextCommit(c3Hash);
-        Utils.writeStringToFile("testFile4", "OLD STUFF");
-        i.add("testFile4");
-        // i.deleteFile("testFolder1");
-        // i.deleteFile("testFile1-1");
-        Commit c4 = new Commit(c3Hash, "AUTHOR", "FOURTH COMMIT");
-        String c4Hash = c4.createCommit();
-        c3.setNextCommit(c4Hash);
+        // i.add("testFile1");
+        // Commit c1 = new Commit("", "AUTHOR", "FIRST COMMIT");
+        // String c1Hash = c1.createCommit();
+        // i.add("testFile2");
+        // // i.add("testFolder1");
+        // Commit c2 = new Commit(c1Hash, "AUTHOR", "SECOND COMMIT");
+        // String c2Hash = c2.createCommit();
+        // c1.setNextCommit(c2Hash);
+        // i.add("testFile3");
+        // Commit c3 = new Commit(c2Hash, "AUTHOR", "THIRD COMMIT");
+        // String c3Hash = c3.createCommit();
+        // c2.setNextCommit(c3Hash);
+        // Utils.writeStringToFile("testFile4", "OLD STUFF");
+        // i.add("testFile4");
+        // // i.deleteFile("testFolder1");
+        // // i.deleteFile("testFile1-1");
+        // Commit c4 = new Commit(c3Hash, "AUTHOR", "FOURTH COMMIT");
+        // String c4Hash = c4.createCommit();
+        // c3.setNextCommit(c4Hash);
 
-        Utils.writeStringToFile("testFile4", "NEW STUFF");
-        i.editFile("testFile4");
+        // Utils.writeStringToFile("testFile4", "NEW STUFF");
+        // i.editFile("testFile4");
 
-        Commit c5 = new Commit(c4Hash, "AUTHOR", "FIFTH COMMIT");
-        String c5Hash = c5.createCommit();
-        c4.setNextCommit(c5Hash);
+        // Commit c5 = new Commit(c4Hash, "AUTHOR", "FIFTH COMMIT");
+        // String c5Hash = c5.createCommit();
+        // c4.setNextCommit(c5Hash);
 
-        i.deleteFile("testFile2");
-        i.deleteFile("testFile4");
-        Commit c6 = new Commit(c5Hash, "AUTHOR", "SIXTH COMMIT");
-        String c6Hash = c6.createCommit();
-        c5.setNextCommit(c6Hash);
+        // i.deleteFile("testFile2");
+        // i.deleteFile("testFile1");
+        // Commit c6 = new Commit(c5Hash, "AUTHOR", "SIXTH COMMIT");
+        // String c6Hash = c6.createCommit();
+        // c5.setNextCommit(c6Hash);
+
+        //
+        //
+        //
+        //
         // Index index = new Index();
         // index.init();
         // Utils.writeStringToFile("testFile1", "testttt");

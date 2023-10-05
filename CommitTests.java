@@ -137,22 +137,22 @@ public class CommitTests {
                 c3.setNextCommit(hash4);
 
                 assertEquals("the right file contents for commit 1 aren't there",
-                                "8458148ff577ce57243004fd84317bb14636107\n\n4c7b64635e83037f75eb16d5a40f60c64cea64da\nAUTHOR\n"
+                                "08458148ff577ce57243004fd84317bb14636107\n\n" + hash2 + "\nAUTHOR\n"
                                                 + c1.getDate() + "\nfirst commit",
                                 Utils.writeFileToString("Objects/" + hash1));
 
                 assertEquals("the right file contents for commit 2 aren't there",
-                                "df589b9e759f5524c387a52e1a5b8435ff39f55a\n8b661cba890f75b3b0b9cbd44d7af76c3854f8d2\nedafdc75230d6ae93235e637b2f8ae2a7a82a014\nAUTHOR\n"
+                                "b04401f53569e5e3aa6df71f61d326ff03c2efef\n" + hash1 + "\n" + hash3 + "\nAUTHOR\n"
                                                 + c2.getDate() + "\nsecond commit",
                                 Utils.writeFileToString("Objects/" + hash2));
 
                 assertEquals("the right file contents for commit 1 aren't there",
-                                "8c2d9d64fc3d31546d7b0b26c6389e735080b895\n4c7b64635e83037f75eb16d5a40f60c64cea64da\n37336bf0a5151d1c7e838cc70b83344a44cd505b\nAUTHOR\n"
+                                "de36afd1be64ddb112c36fdd318b93c9f84217be\n" + hash2 + "\n" + hash4 + "\nAUTHOR\n"
                                                 + c3.getDate() + "\nthird commit",
                                 Utils.writeFileToString("Objects/" + hash3));
 
                 assertEquals("the right file contents for commit 2 aren't there",
-                                "c8a119fdf57dee23cc22d52bb79ff37b1d329529\nedafdc75230d6ae93235e637b2f8ae2a7a82a014\n\nAUTHOR\n"
+                                "480480a54652fd248dfd5804411e941914d85db0\n" + hash3 + "\n\nAUTHOR\n"
                                                 + c4.getDate() + "\nfourth commit",
                                 Utils.writeFileToString("Objects/" + hash4));
         }

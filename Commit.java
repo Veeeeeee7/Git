@@ -93,7 +93,7 @@ public class Commit {
         File f = new File(fileName);
         Blob b = new Blob(f);
         b.createBlob();
-        oldFiles.add("blob : " + b.hash + " : " + fileName);
+        oldFiles.add(0, "blob : " + b.hash + " : " + fileName);
     }
 
     private void deleteFile(String fileName) throws Exception {
@@ -106,8 +106,15 @@ public class Commit {
     private String findTree(String treeHash, String fileName) throws Exception {
         String treeContents = Utils.writeFileToString("Objects/" + treeHash);
         String[] treeLines = treeContents.split("\n");
+        // for (int i = 0; i < treeLines.length; i++) {
+        // if (treeLines[i].length() == 47) {
+        // String temp = treeLines[i];
+        // treeLines[i] = treeLines[treeLines.length - 1];
+        // treeLines[treeLines.length - 1] = temp;
+        // }
+        // }
         String lastTreeHash = "";
-        String previousTree = "";
+        // String previousTree = "";
         for (int i = 0; i < treeLines.length; i++) {
             // if the line is a blob
             if (treeLines[i].startsWith("blob")) {
@@ -140,10 +147,10 @@ public class Commit {
             }
             // if none of the above, it is the previous tree
             else {
-                // lastTreeHash = findTree(treeLines[i].substring(7), fileName);
-                // if (lastTreeHash.equals("")) {
-                // oldFiles.add(treeLines[i]);
-                // }
+                lastTreeHash = findTree(treeLines[i].substring(7), fileName);
+                if (lastTreeHash.equals("")) {
+                    oldFiles.add(treeLines[i]);
+                }
                 // previousTree = treeLines[i].substring(7);
             }
         }

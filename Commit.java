@@ -42,10 +42,13 @@ public class Commit {
                 Tree t = new Tree();
                 for (String line : oldFiles) {
                     t.add(line);
+                    System.out.println(line);
                 }
                 t.finalize();
                 Utils.deleteFile("Objects/" + treeSHA1);
                 treeSHA1 = t.getSHA1();
+                System.out.println(treeSHA1);
+                System.out.println("\n\n");
             }
             for (String file : filesToEdit) {
 
@@ -53,10 +56,13 @@ public class Commit {
                 Tree t = new Tree();
                 for (String line : oldFiles) {
                     t.add(line);
+                    System.out.println(line);
                 }
                 t.finalize();
                 Utils.deleteFile("Objects/" + treeSHA1);
                 treeSHA1 = t.getSHA1();
+                System.out.println(treeSHA1);
+                System.out.println("\n\n");
             }
         }
         createFile();
@@ -93,41 +99,52 @@ public class Commit {
     private void deleteFile(String fileName) throws Exception {
         oldFiles = new ArrayList<>();
         String treeHash = treeSHA1;
-        System.out.println(treeHash);
+        // System.out.println(treeHash);
         findTree(treeHash, fileName);
-        for (String line : oldFiles) {
-            System.out.println(line);
-        }
-        System.out.println("\n\n");
     }
 
     private String findTree(String treeHash, String fileName) throws Exception {
         String treeContents = Utils.writeFileToString("Objects/" + treeHash);
         String[] treeLines = treeContents.split("\n");
         String lastTreeHash = "";
+        String previousTree = "";
         for (int i = 0; i < treeLines.length; i++) {
+            // if the line is a blob
             if (treeLines[i].startsWith("blob")) {
                 if (treeLines[i].substring(50).equals(fileName)) {
                     for (int j = i + 1; j < treeLines.length; j++) {
                         oldFiles.add(treeLines[j]);
                     }
+                    // if (previousTree.length() > 0) {
+                    // oldFiles.add(previousTree);
+                    // }
                     return treeHash;
                 }
                 oldFiles.add(treeLines[i]);
-            } else if (i == treeLines.length - 1 && !(treeLines[i].length() == 48)) {
-                lastTreeHash = findTree(treeLines[i].substring(7), fileName);
-
-            } else if (treeLines[i].substring(50).equals(fileName)) {
-                for (int j = i + 1; j < treeLines.length; j++) {
-                    oldFiles.add(treeLines[j]);
-                }
-                return treeHash;
-            } else {
+            }
+            // if the line is a tree and is a directory and not the previous commits tree
+            else if (treeLines[i].startsWith("tree") && (treeLines[i].length() > 48)) {
                 lastTreeHash = findTree(treeLines[i].substring(7, treeLines[i].substring(7).indexOf(" ") + 7),
                         fileName);
                 if (lastTreeHash.equals("")) {
                     oldFiles.add(treeLines[i]);
                 }
+            }
+            // if the line is not a blob (thus a tree) and the directory is the one to be
+            // deleted
+            else if ((treeLines[i].length() > 48) && treeLines[i].substring(50).equals(fileName)) {
+                for (int j = i + 1; j < treeLines.length; j++) {
+                    oldFiles.add(treeLines[j]);
+                }
+                return treeHash;
+            }
+            // if none of the above, it is the previous tree
+            else {
+                // lastTreeHash = findTree(treeLines[i].substring(7), fileName);
+                // if (lastTreeHash.equals("")) {
+                // oldFiles.add(treeLines[i]);
+                // }
+                // previousTree = treeLines[i].substring(7);
             }
         }
         return lastTreeHash;

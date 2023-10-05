@@ -15,7 +15,7 @@ public class Tester {
         Commit c1 = new Commit("", "AUTHOR", "FIRST COMMIT");
         String c1Hash = c1.createCommit();
         i.add("testFile2");
-        i.add("testFolder1");
+        // i.add("testFolder1");
         Commit c2 = new Commit(c1Hash, "AUTHOR", "SECOND COMMIT");
         String c2Hash = c2.createCommit();
         c1.setNextCommit(c2Hash);
@@ -25,7 +25,6 @@ public class Tester {
         c2.setNextCommit(c3Hash);
         Utils.writeStringToFile("testFile4", "OLD STUFF");
         i.add("testFile4");
-        // i.deleteFile("testFile2");
         // i.deleteFile("testFolder1");
         // i.deleteFile("testFile1-1");
         Commit c4 = new Commit(c3Hash, "AUTHOR", "FOURTH COMMIT");
@@ -39,6 +38,11 @@ public class Tester {
         String c5Hash = c5.createCommit();
         c4.setNextCommit(c5Hash);
 
+        i.deleteFile("testFile2");
+        i.deleteFile("testFile4");
+        Commit c6 = new Commit(c5Hash, "AUTHOR", "SIXTH COMMIT");
+        String c6Hash = c6.createCommit();
+        c5.setNextCommit(c6Hash);
         // Index index = new Index();
         // index.init();
         // Utils.writeStringToFile("testFile1", "testttt");

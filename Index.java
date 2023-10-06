@@ -93,7 +93,7 @@ public class Index {
             // sb.append(s);
             // }
             // }
-            if (!line.contains(" " + fileName)) {
+            if (!(line + "\n").contains(" " + fileName + "\n")) {
                 if (sb.toString().equals(""))
                     sb.append(line);
                 else {

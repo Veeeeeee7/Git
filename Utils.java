@@ -1,6 +1,7 @@
 import java.io.*;
 import java.math.BigInteger;
 import java.security.MessageDigest;
+import java.util.HashSet;
 import java.util.Scanner;
 
 public class Utils {
@@ -95,6 +96,23 @@ public class Utils {
             System.out.println("Error in hashing blob");
         }
         return null;
+    }
+
+    public static boolean equalContents(String c1, String c2) {
+        HashSet<String> c1Lines = new HashSet<>();
+        for (String line : c1.split("\n")) {
+            c1Lines.add(line);
+        }
+
+        HashSet<String> c2Lines = new HashSet<>();
+        for (String line : c1.split("\n")) {
+            c1Lines.add(line);
+        }
+        if (c1Lines.size() != c2Lines.size()) {
+            return false;
+        }
+
+        return true;
     }
 
 }

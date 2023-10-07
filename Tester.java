@@ -5,20 +5,20 @@ import java.io.IOException;
 public class Tester {
     public static void main(String[] args) throws Exception {
         //
-        String c1 = "blob\nyup\nhi";
-        String c2 = "hi\nyup\nblob";
-        System.out.println(Utils.equalContents(c1, c2));
+        // String c1 = "blob\nyup\nhi";
+        // String c2 = "hi\nyup\nblob";
+        // System.out.println(Utils.equalContents(c1, c2));
 
-        // Utils.writeStringToFile("testFile1", "testttt");
-        // Utils.writeStringToFile("testFile2", "TESTTJKFLGJL:KJ");
-        // Utils.createDirectory("testFolder1");
-        // Utils.writeStringToFile("testFolder1/testFile1-1", "t;kljfb");
-        // Utils.writeStringToFile("testFolder1/testFile1-2", "BLKIEUY");
-        // Utils.writeStringToFile("testFile3", "ajmjkmkm5t5");
-        // Utils.writeStringToFile("testFile4", "aer:KJ");
-        // Utils.createDirectory("testFolder2");
-        // Utils.writeStringToFile("testFolder2/testFile2-1", "dgjndghj");
-        // Utils.writeStringToFile("testFolder2/testFile2-2", "aerh");
+        Utils.writeStringToFile("testFile1", "testttt");
+        Utils.writeStringToFile("testFile2", "TESTTJKFLGJL:KJ");
+        Utils.createDirectory("testFolder1");
+        Utils.writeStringToFile("testFolder1/testFile1-1", "t;kljfb");
+        Utils.writeStringToFile("testFolder1/testFile1-2", "BLKIEUY");
+        Utils.writeStringToFile("testFile3", "ajmjkmkm5t5");
+        Utils.writeStringToFile("testFile4", "aer:KJ");
+        Utils.createDirectory("testFolder2");
+        Utils.writeStringToFile("testFolder2/testFile2-1", "dgjndghj");
+        Utils.writeStringToFile("testFolder2/testFile2-2", "aerh");
 
         // Index index = new Index();
         // index.init();

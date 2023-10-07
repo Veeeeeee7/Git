@@ -23,7 +23,6 @@ public class Tester {
         Index index = new Index();
         index.init();
         index.add("testFile1");
-        // index.add("testFile2");
         Commit c1 = new Commit("", "AUTHOR", "first commit");
         String hash1 = c1.createCommit();
         index.add("testFolder1");
@@ -32,23 +31,24 @@ public class Tester {
         String hash2 = c2.createCommit();
         c1.setNextCommit(hash2);
         index.add("testFile3");
-        // index.add("testFile4");
         Commit c3 = new Commit(hash2, "AUTHOR", "third commit");
         String hash3 = c3.createCommit();
         c2.setNextCommit(hash3);
-        // index.add("testFolder2");
         index.add("testFile4");
+        Utils.writeStringToFile("testFile2", "TEST FILE 2 NEW CONTENTS");
+        index.editFile("testFile2");
+        index.deleteFile("testFolder1");
         Commit c4 = new Commit(hash3, "AUTHOR", "fourth commit");
         String hash4 = c4.createCommit();
         c3.setNextCommit(hash4);
-        System.out.println(c4.traverse() + "\n\n");
-        index.deleteFile("testFile2");
-
-        // index.deleteFile("testFolder2");
+        Utils.writeStringToFile("testFile4", "TEST FILE 4 NEW CONTENTS WOW");
+        index.deleteFile("testFile3");
+        index.editFile("testFile4");
         Commit c5 = new Commit(hash4, "AUTHOR", "fifth commit");
         String hash5 = c5.createCommit();
         c4.setNextCommit(hash5);
 
+        System.out.println(c5.traverse() + "\n\n");
         // Index index = new Index();
         // index.init();
         // index.add("testFile1");

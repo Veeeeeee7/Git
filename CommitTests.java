@@ -48,6 +48,7 @@ public class CommitTests {
         @Test
         void testCreateCommit() throws Exception {
                 Index index = new Index();
+                index.init();
                 index.add("testFile1");
                 index.add("testFile2");
                 Commit commit = new Commit("", "author claire", "this is for testing");
@@ -61,6 +62,7 @@ public class CommitTests {
         @Test
         void testGetDate() throws Exception {
                 Index index = new Index();
+                index.init();
                 index.add("testFile1");
                 index.add("testFile2");
                 Commit commit = new Commit("", "author claire", "this is for testing");
@@ -74,6 +76,7 @@ public class CommitTests {
         @Test
         void testSetNextCommit() throws Exception {
                 Index index = new Index();
+                index.init();
                 index.add("testFile1");
                 index.add("testFile2");
                 Commit c = new Commit("", "author", "summary");
@@ -88,6 +91,7 @@ public class CommitTests {
         @Test
         void test1Commit() throws Exception {
                 Index index = new Index();
+                index.init();
                 index.add("testFile1");
                 index.add("testFile2");
                 Commit c = new Commit("", "AUTHOR", "BEST SUMMARY");
@@ -101,6 +105,7 @@ public class CommitTests {
         @Test
         void test2Commits() throws Exception {
                 Index index = new Index();
+                index.init();
                 index.add("testFile1");
                 index.add("testFile2");
                 Commit c1 = new Commit("", "AUTHOR", "first commit");
@@ -124,6 +129,7 @@ public class CommitTests {
         @Test
         void test4Commits() throws Exception {
                 Index index = new Index();
+                index.init();
                 index.add("testFile1");
                 index.add("testFile2");
                 Commit c1 = new Commit("", "AUTHOR", "first commit");
@@ -164,26 +170,46 @@ public class CommitTests {
         }
 
         @Test
-        void testDeletingFiles() throws Exception {
+        void testDeletingAndEditingFiles() throws Exception {
                 Index index = new Index();
+                index.init();
                 index.add("testFile1");
-                index.add("testFile2");
                 Commit c1 = new Commit("", "AUTHOR", "first commit");
                 String hash1 = c1.createCommit();
                 index.add("testFolder1");
+                index.add("testFile2");
                 Commit c2 = new Commit(hash1, "AUTHOR", "second commit");
                 String hash2 = c2.createCommit();
                 c1.setNextCommit(hash2);
                 index.add("testFile3");
-                index.add("testFile4");
                 Commit c3 = new Commit(hash2, "AUTHOR", "third commit");
                 String hash3 = c3.createCommit();
                 c2.setNextCommit(hash3);
-                index.add("testFolder2");
+                index.add("testFile4");
+                Utils.writeStringToFile("testFile2", "TEST FILE 2 NEW CONTENTS");
+                index.editFile("testFile2");
+                index.deleteFile("testFolder1");
                 Commit c4 = new Commit(hash3, "AUTHOR", "fourth commit");
                 String hash4 = c4.createCommit();
                 c3.setNextCommit(hash4);
-                index.deleteFile("testFile1");
-                index.deleteFile("testFolder2");
+                Utils.writeStringToFile("testFile4", "TEST FILE 4 NEW CONTENTS WOW");
+                index.deleteFile("testFile3");
+                index.editFile("testFile4");
+                Commit c5 = new Commit(hash4, "AUTHOR", "fifth commit");
+                String hash5 = c5.createCommit();
+                c4.setNextCommit(hash5);
+
+                assertEquals("commit 4 has doesn't have the right tree", "f1f3bb2ec45c70fc7f39572d19390fe709c453fa",
+                                c4.getTreeHash());
+                assertTrue("commit 4 tree doesn't have the right files", Utils.equalContents(
+                                Utils.writeFileToString("Objects/" + c4.getTreeHash()),
+                                "blob : 4a89db7c03ba322f55facedbc67904d1ecd4dbc8 : testFile2\nblob : 4124e9fe791cc21c4c3cf6a183d7cd3f7715b46c : testFile3\nblob : 9229e4d91535e956c7bc675f11bb2f90920dd6f8 : testFile4\ntree : 2382dc6f858ca7f4497ce948bfbdce527c77c474"));
+                assertEquals("commit 5 has doesn't have the right tree", "12ecaab2c4f0ecb53a7b07ab228b1acdf2515248",
+                                c5.getTreeHash());
+                assertTrue("commit 5 tree doesn't have the right files", Utils.equalContents(
+                                Utils.writeFileToString("Objects/" + c5.getTreeHash()),
+                                "blob : f0b9227c15cfc2c0dbc1184ebd689a9f27e2e43f : testFile4\n" + //
+                                                "blob : 4a89db7c03ba322f55facedbc67904d1ecd4dbc8 : testFile2\n" + //
+                                                "tree : 2382dc6f858ca7f4497ce948bfbdce527c77c474"));
         }
 }

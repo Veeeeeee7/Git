@@ -1,5 +1,7 @@
 import java.io.File;
+import java.io.FileFilter;
 import java.io.FileWriter;
+import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.math.BigInteger;
@@ -13,6 +15,7 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
 
 public class Commit {
@@ -28,6 +31,7 @@ public class Commit {
     private ArrayList<String> filesToEdit;
     private int layer;
     private ArrayList<String> directory;
+    private HashSet<String> importantFiles;
 
     public Commit(String parentCommit, String author, String summary) throws Exception {
         this.parentCommit = parentCommit;
@@ -36,6 +40,30 @@ public class Commit {
         this.oldFiles = new ArrayList<>();
         this.filesToRemove = new ArrayList<>();
         this.filesToEdit = new ArrayList<>();
+        importantFiles = new HashSet<>();
+        importantFiles.add(".vscode");
+        importantFiles.add("lib");
+        importantFiles.add("Objects");
+        importantFiles.add("TestFiles");
+        importantFiles.add(".gitignore");
+        importantFiles.add("ANDREW.jpg");
+        importantFiles.add("Blob.java");
+        importantFiles.add("BlobTests.java");
+        importantFiles.add("codeConfig.json");
+        importantFiles.add("Commit.java");
+        importantFiles.add("CommitTests.java");
+        importantFiles.add("Index");
+        importantFiles.add("Index.java");
+        importantFiles.add("IndexTests.java");
+        importantFiles.add("JunitTests.java");
+        importantFiles.add("README.md");
+        importantFiles.add("temp");
+        importantFiles.add("Tester.java");
+        importantFiles.add("Tree");
+        importantFiles.add("Tree.java");
+        importantFiles.add("TreeTests.java");
+        importantFiles.add("Utils.java");
+
         createTree();
     }
 
@@ -95,6 +123,22 @@ public class Commit {
     public void checkout() throws Exception {
         directory = new ArrayList<>();
         HashMap<String, String> treeResult = checkoutTraverse(treeSHA1);
+        File f = new File(System.getProperty("user.dir"));
+        String[] testFiles = f.list(new FilenameFilter() {
+            @Override
+            public boolean accept(File file, String name) {
+                File f = new File(name);
+                return !importantFiles.contains(name) && !f.isHidden() && !f.isDirectory();
+            }
+        });
+        String[] testFolders = f.list(new FilenameFilter() {
+            @Override
+            public boolean accept(File file, String name) {
+                File f = new File(name);
+                return !importantFiles.contains(name) && !f.isHidden() && f.isDirectory();
+            }
+        });
+
         for (String key : treeResult.keySet()) {
             // System.out.println(key + " : " + treeResult.get(key));
             Utils.writeStringToFile(treeResult.get(key), Utils.writeFileToString("Objects/" + key));

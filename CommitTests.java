@@ -211,5 +211,8 @@ public class CommitTests {
                                 "blob : f0b9227c15cfc2c0dbc1184ebd689a9f27e2e43f : testFile4\n" + //
                                                 "blob : 4a89db7c03ba322f55facedbc67904d1ecd4dbc8 : testFile2\n" + //
                                                 "tree : 2382dc6f858ca7f4497ce948bfbdce527c77c474"));
+
+                Utils.writeStringToFile("testFile2", "TESTTJKFLGJL:KJ");
+                Utils.writeStringToFile("testFile4", "aer:KJ");
         }
 }

@@ -108,8 +108,11 @@ public class JunitTests {
         // checking that it added a new tree in the objects folder
 
         String treeContents = Utils.writeFileToString("Tree");
-        assertEquals(treeContents,
-                "blob : 22343k2jn2njijfinein322i3n3in3i333in3333 : blok.txt\nblob : 1263746536521765436527635421890jvncdeixs : 2i3nkd");
+        assertTrue(Utils.equalContents(treeContents,
+                "blob : 22343k2jn2njijfinein322i3n3in3i333in3333 : blok.txt\nblob : 1263746536521765436527635421890jvncdeixs : 2i3nkd"));
+        // assertEquals(treeContents,
+        // "blob : 22343k2jn2njijfinein322i3n3in3i333in3333 : blok.txt\nblob :
+        // 1263746536521765436527635421890jvncdeixs : 2i3nkd");
     }
 
     @Test

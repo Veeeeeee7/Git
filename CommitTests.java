@@ -165,6 +165,25 @@ public class CommitTests {
 
         @Test
         void testDeletingFiles() throws Exception {
-
+                Index index = new Index();
+                index.add("testFile1");
+                index.add("testFile2");
+                Commit c1 = new Commit("", "AUTHOR", "first commit");
+                String hash1 = c1.createCommit();
+                index.add("testFolder1");
+                Commit c2 = new Commit(hash1, "AUTHOR", "second commit");
+                String hash2 = c2.createCommit();
+                c1.setNextCommit(hash2);
+                index.add("testFile3");
+                index.add("testFile4");
+                Commit c3 = new Commit(hash2, "AUTHOR", "third commit");
+                String hash3 = c3.createCommit();
+                c2.setNextCommit(hash3);
+                index.add("testFolder2");
+                Commit c4 = new Commit(hash3, "AUTHOR", "fourth commit");
+                String hash4 = c4.createCommit();
+                c3.setNextCommit(hash4);
+                index.deleteFile("testFile1");
+                index.deleteFile("testFolder2");
         }
 }

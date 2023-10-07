@@ -9,38 +9,67 @@ public class Tester {
         // String c2 = "hi\nyup\nblob";
         // System.out.println(Utils.equalContents(c1, c2));
 
-        // Utils.writeStringToFile("testFile1", "testttt");
-        // Utils.writeStringToFile("testFile2", "TESTTJKFLGJL:KJ");
-        // Utils.createDirectory("testFolder1");
-        // Utils.writeStringToFile("testFolder1/testFile1-1", "t;kljfb");
-        // Utils.writeStringToFile("testFolder1/testFile1-2", "BLKIEUY");
-        // Utils.writeStringToFile("testFile3", "ajmjkmkm5t5");
-        // Utils.writeStringToFile("testFile4", "aer:KJ");
-        // Utils.createDirectory("testFolder2");
-        // Utils.writeStringToFile("testFolder2/testFile2-1", "dgjndghj");
-        // Utils.writeStringToFile("testFolder2/testFile2-2", "aerh");
+        Utils.writeStringToFile("testFile1", "testttt");
+        Utils.writeStringToFile("testFile2", "TESTTJKFLGJL:KJ");
+        Utils.createDirectory("testFolder1");
+        Utils.writeStringToFile("testFolder1/testFile1-1", "t;kljfb");
+        Utils.writeStringToFile("testFolder1/testFile1-2", "BLKIEUY");
+        Utils.writeStringToFile("testFile3", "ajmjkmkm5t5");
+        Utils.writeStringToFile("testFile4", "aer:KJ");
+        Utils.createDirectory("testFolder2");
+        Utils.writeStringToFile("testFolder2/testFile2-1", "dgjndghj");
+        Utils.writeStringToFile("testFolder2/testFile2-2", "aerh");
 
         Index index = new Index();
         index.init();
         index.add("testFile1");
-        index.add("testFile2");
+        // index.add("testFile2");
         Commit c1 = new Commit("", "AUTHOR", "first commit");
         String hash1 = c1.createCommit();
         index.add("testFolder1");
+        index.add("testFile2");
         Commit c2 = new Commit(hash1, "AUTHOR", "second commit");
         String hash2 = c2.createCommit();
         c1.setNextCommit(hash2);
         index.add("testFile3");
-        index.add("testFile4");
+        // index.add("testFile4");
         Commit c3 = new Commit(hash2, "AUTHOR", "third commit");
         String hash3 = c3.createCommit();
         c2.setNextCommit(hash3);
-        index.add("testFolder2");
+        // index.add("testFolder2");
+        index.add("testFile4");
         Commit c4 = new Commit(hash3, "AUTHOR", "fourth commit");
         String hash4 = c4.createCommit();
         c3.setNextCommit(hash4);
+        System.out.println(c4.traverse() + "\n\n");
+        index.deleteFile("testFile2");
 
-        System.out.println(c4.traverse());
+        // index.deleteFile("testFolder2");
+        Commit c5 = new Commit(hash4, "AUTHOR", "fifth commit");
+        String hash5 = c5.createCommit();
+        c4.setNextCommit(hash5);
+
+        // Index index = new Index();
+        // index.init();
+        // index.add("testFile1");
+        // index.add("testFile2");
+        // Commit c1 = new Commit("", "AUTHOR", "first commit");
+        // String hash1 = c1.createCommit();
+        // index.add("testFolder1");
+        // Commit c2 = new Commit(hash1, "AUTHOR", "second commit");
+        // String hash2 = c2.createCommit();
+        // c1.setNextCommit(hash2);
+        // index.add("testFile3");
+        // index.add("testFile4");
+        // Commit c3 = new Commit(hash2, "AUTHOR", "third commit");
+        // String hash3 = c3.createCommit();
+        // c2.setNextCommit(hash3);
+        // index.add("testFolder2");
+        // Commit c4 = new Commit(hash3, "AUTHOR", "fourth commit");
+        // String hash4 = c4.createCommit();
+        // c3.setNextCommit(hash4);
+
+        // System.out.println(c4.traverse());
 
         /*
          * TESTING CODE FOR DELETING AND EDITING

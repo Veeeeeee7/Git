@@ -9,6 +9,7 @@ import java.security.MessageDigest;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.LinkedList;
@@ -147,13 +148,15 @@ public class Commit {
     private String findTree(String treeHash, String fileName) throws Exception {
         String treeContents = Utils.writeFileToString("Objects/" + treeHash);
         String[] treeLines = treeContents.split("\n");
-        // for (int i = 0; i < treeLines.length; i++) {
-        // if (treeLines[i].length() == 47) {
-        // String temp = treeLines[i];
-        // treeLines[i] = treeLines[treeLines.length - 1];
-        // treeLines[treeLines.length - 1] = temp;
-        // }
-        // }
+        Arrays.sort(treeLines);
+        for (int i = 0; i < treeLines.length; i++) {
+            if (treeLines[i].length() == 47) {
+                String temp = treeLines[i];
+                treeLines[i] = treeLines[treeLines.length - 1];
+                treeLines[treeLines.length - 1] = temp;
+                break;
+            }
+        }
         String lastTreeHash = "";
         // String previousTree = "";
         for (int i = 0; i < treeLines.length; i++) {
@@ -170,14 +173,6 @@ public class Commit {
                 }
                 oldFiles.add(treeLines[i]);
             }
-            // if the line is a tree and is a directory and not the previous commits tree
-            else if (treeLines[i].startsWith("tree") && (treeLines[i].length() > 48)) {
-                lastTreeHash = findTree(treeLines[i].substring(7, treeLines[i].substring(7).indexOf(" ") + 7),
-                        fileName);
-                if (lastTreeHash.equals("")) {
-                    oldFiles.add(treeLines[i]);
-                }
-            }
             // if the line is not a blob (thus a tree) and the directory is the one to be
             // deleted
             else if ((treeLines[i].length() > 48) && treeLines[i].substring(50).equals(fileName)) {
@@ -185,6 +180,14 @@ public class Commit {
                     oldFiles.add(treeLines[j]);
                 }
                 return treeHash;
+            }
+            // if the line is a tree and is a directory and not the previous commits tree
+            else if (treeLines[i].startsWith("tree") && (treeLines[i].length() > 48)) {
+                lastTreeHash = findTree(treeLines[i].substring(7, treeLines[i].substring(7).indexOf(" ") + 7),
+                        fileName);
+                if (lastTreeHash.equals("")) {
+                    oldFiles.add(treeLines[i]);
+                }
             }
             // if none of the above, it is the previous tree
             else {

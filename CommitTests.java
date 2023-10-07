@@ -7,6 +7,10 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -47,10 +51,10 @@ public class CommitTests {
                 index.add("testFile1");
                 index.add("testFile2");
                 Commit commit = new Commit("", "author claire", "this is for testing");
-                commit.createCommit();
+                String hash = commit.createCommit();
                 Path path = Paths.get("Objects");
                 assertTrue(Files.exists(path));
-                File file = new File("Objects/8458148ff577ce57243004fd84317bb14636107");
+                File file = new File("Objects/" + hash);
                 assertTrue(file.exists());
         }
 
@@ -61,7 +65,9 @@ public class CommitTests {
                 index.add("testFile2");
                 Commit commit = new Commit("", "author claire", "this is for testing");
                 String actaul = commit.getDate();
-                String expected = "2023-10-02";
+                Date date = Calendar.getInstance().getTime();
+                DateFormat dateFormater = new SimpleDateFormat("YYYY-MM-dd");
+                String expected = dateFormater.format(date);
                 assertEquals(expected, actaul);
         }
 
@@ -75,7 +81,7 @@ public class CommitTests {
                 c.setNextCommit("next commit");
                 assertTrue("the right file isn't created", Utils.fileExists("objects/" + hash));
                 assertEquals("the right file contents aren't there", Utils.writeFileToString("objects/" + hash),
-                                "8458148ff577ce57243004fd84317bb14636107\n\nnext commit\nauthor\n" + c.getDate()
+                                "08458148ff577ce57243004fd84317bb14636107\n\nnext commit\nauthor\n" + c.getDate()
                                                 + "\nsummary");
         }
 
@@ -88,7 +94,7 @@ public class CommitTests {
                 String hash = c.createCommit();
                 assertTrue("the right file isn't created", Utils.fileExists("objects/" + hash));
                 assertEquals("the right file contents aren't there", Utils.writeFileToString("objects/" + hash),
-                                "8458148ff577ce57243004fd84317bb14636107\n\n\nAUTHOR\n" + c.getDate()
+                                "08458148ff577ce57243004fd84317bb14636107\n\n\nAUTHOR\n" + c.getDate()
                                                 + "\nBEST SUMMARY");
         }
 
@@ -105,12 +111,12 @@ public class CommitTests {
                 c1.setNextCommit(hash2);
 
                 assertEquals("the right file contents for commit 1 aren't there",
-                                "8458148ff577ce57243004fd84317bb14636107\n\n4c7b64635e83037f75eb16d5a40f60c64cea64da\nAUTHOR\n"
+                                "08458148ff577ce57243004fd84317bb14636107\n\n" + hash2 + "\nAUTHOR\n"
                                                 + c1.getDate() + "\nfirst commit",
                                 Utils.writeFileToString("Objects/" + hash1));
 
                 assertEquals("the right file contents for commit 2 aren't there",
-                                "df589b9e759f5524c387a52e1a5b8435ff39f55a\n8b661cba890f75b3b0b9cbd44d7af76c3854f8d2\n\nAUTHOR\n"
+                                "b04401f53569e5e3aa6df71f61d326ff03c2efef\n" + hash1 + "\n\nAUTHOR\n"
                                                 + c2.getDate() + "\nsecond commit",
                                 Utils.writeFileToString("Objects/" + hash2));
         }

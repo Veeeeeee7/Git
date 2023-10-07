@@ -5,6 +5,9 @@ import java.io.IOException;
 public class Tester {
     public static void main(String[] args) throws Exception {
         //
+        String c1 = "blob\nyup\nhi";
+        String c2 = "hi\nyup\nblob";
+        System.out.println(Utils.equalContents(c1, c2));
 
         // Utils.writeStringToFile("testFile1", "testttt");
         // Utils.writeStringToFile("testFile2", "TESTTJKFLGJL:KJ");

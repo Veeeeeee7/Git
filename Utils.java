@@ -100,15 +100,42 @@ public class Utils {
 
     public static boolean equalContents(String c1, String c2) {
         HashSet<String> c1Lines = new HashSet<>();
+        HashSet<String> temp1 = new HashSet<>();
         for (String line : c1.split("\n")) {
             c1Lines.add(line);
+            temp1.add(line);
         }
 
+        HashSet<String> temp2 = new HashSet<>();
         HashSet<String> c2Lines = new HashSet<>();
-        for (String line : c1.split("\n")) {
-            c1Lines.add(line);
+        for (String line : c2.split("\n")) {
+            c2Lines.add(line);
+            temp2.add(line);
         }
+
         if (c1Lines.size() != c2Lines.size()) {
+            return false;
+        }
+
+        for (String line : c1Lines) {
+            if (!c2Lines.contains(line)) {
+                return false;
+            }
+            temp1.remove(line);
+        }
+
+        if (!temp1.isEmpty()) {
+            return false;
+        }
+
+        for (String line : c2Lines) {
+            if (!c1Lines.contains(line)) {
+                return false;
+            }
+            temp2.remove(line);
+        }
+
+        if (!temp2.isEmpty()) {
             return false;
         }
 

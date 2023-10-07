@@ -162,4 +162,9 @@ public class CommitTests {
                                                 + c4.getDate() + "\nfourth commit",
                                 Utils.writeFileToString("Objects/" + hash4));
         }
+
+        @Test
+        void testDeletingFiles() throws Exception {
+
+        }
 }

@@ -24,6 +24,7 @@ public class Commit {
     private ArrayList<String> oldFiles;
     private ArrayList<String> filesToRemove;
     private ArrayList<String> filesToEdit;
+    private int layer;
 
     public Commit(String parentCommit, String author, String summary) throws Exception {
         this.parentCommit = parentCommit;
@@ -86,6 +87,46 @@ public class Commit {
         fileHash = hash;
         file.delete();
         return hash;
+    }
+
+    public String traverse() throws Exception {
+        layer = 0;
+        ArrayList<String> content = traverseTree(treeSHA1);
+        StringBuilder result = new StringBuilder();
+        for (String line : content) {
+            result.append(line + "\n");
+        }
+        return result.toString();
+    }
+
+    private ArrayList<String> traverseTree(String treeHash) throws Exception {
+        layer++;
+        String[] lines = Utils.writeFileToString("Objects/" + treeHash).split("\n");
+        ArrayList<String> result = new ArrayList<>();
+        for (String line : lines) {
+            StringBuilder tabs = new StringBuilder();
+            for (int i = 1; i < layer; i++) {
+                if (i == layer - 1) {
+                    tabs.append("| - - - - ");
+                } else {
+                    tabs.append(".          ");
+                }
+            }
+            // System.out.println(tabs.toString() + line);
+            if (line.length() < 50) {
+                layer--;
+                result.addAll(traverseTree(line.substring(7, 47)));
+            } else if (line.startsWith("tree")) {
+                result.add(tabs.toString() + line.substring(50) + "/");
+                result.addAll(traverseTree(line.substring(7, 47)));
+                layer--;
+
+            } else {
+                result.add(tabs.toString() + line.substring(50));
+            }
+        }
+        // layer--;
+        return result;
     }
 
     private void editFile(String fileName) throws Exception {

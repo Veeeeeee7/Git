@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.LinkedList;
 
 public class Commit {
@@ -26,6 +27,7 @@ public class Commit {
     private ArrayList<String> filesToRemove;
     private ArrayList<String> filesToEdit;
     private int layer;
+    private ArrayList<String> directory;
 
     public Commit(String parentCommit, String author, String summary) throws Exception {
         this.parentCommit = parentCommit;
@@ -88,6 +90,43 @@ public class Commit {
         fileHash = hash;
         file.delete();
         return hash;
+    }
+
+    public void checkout() throws Exception {
+        directory = new ArrayList<>();
+        HashMap<String, String> treeResult = checkoutTraverse(treeSHA1);
+        for (String key : treeResult.keySet()) {
+            System.out.println(key + " : " + treeResult.get(key));
+        }
+    }
+
+    private HashMap<String, String> checkoutTraverse(String treeHash) throws Exception {
+        String[] lines = Utils.writeFileToString("Objects/" + treeHash).split("\n");
+        HashMap<String, String> result = new HashMap<>();
+
+        for (String line : lines) {
+            StringBuilder path = new StringBuilder();
+            for (String folder : directory) {
+                path.append(folder);
+            }
+
+            if (line.startsWith("blob")) {
+                result.put(line.substring(7, 47), path + line.substring(50));
+            } else if (line.length() < 50) {
+                HashMap<String, String> treeResult = checkoutTraverse(line.substring(7));
+                for (String key : treeResult.keySet()) {
+                    result.put(key, path + treeResult.get(key));
+                }
+            } else {
+                directory.add(line.substring(50) + "/");
+                HashMap<String, String> treeResult = checkoutTraverse(line.substring(7, 47));
+                for (String key : treeResult.keySet()) {
+                    result.put(key, treeResult.get(key));
+                }
+                directory.remove(directory.size() - 1);
+            }
+        }
+        return result;
     }
 
     public String traverse() throws Exception {

@@ -53,8 +53,8 @@ public class Tester {
         String hash5 = c5.createCommit();
         c4.setNextCommit(hash5);
 
-        c5.checkout();
-        System.out.println("\n\n" + c5.traverse());
+        c4.checkout();
+        System.out.println("\n\n" + c4.traverse());
         // Index index = new Index();
         // index.init();
         // index.add("testFile1");

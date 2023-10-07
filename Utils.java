@@ -7,6 +7,12 @@ import java.util.Scanner;
 public class Utils {
 
     public static void writeStringToFile(String filename, String str) throws FileNotFoundException {
+        int index = filename.indexOf("/");
+        while (index > -1) {
+            File folder = new File(filename.substring(0, index));
+            folder.mkdir();
+            index = filename.indexOf("/", index + 1);
+        }
         if (!fileExists(filename)) {
             createFile(filename);
         }

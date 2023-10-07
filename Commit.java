@@ -96,7 +96,8 @@ public class Commit {
         directory = new ArrayList<>();
         HashMap<String, String> treeResult = checkoutTraverse(treeSHA1);
         for (String key : treeResult.keySet()) {
-            System.out.println(key + " : " + treeResult.get(key));
+            // System.out.println(key + " : " + treeResult.get(key));
+            Utils.writeStringToFile(treeResult.get(key), Utils.writeFileToString("Objects/" + key));
         }
     }
 
@@ -105,6 +106,7 @@ public class Commit {
         HashMap<String, String> result = new HashMap<>();
 
         for (String line : lines) {
+            System.out.println(line);
             StringBuilder path = new StringBuilder();
             for (String folder : directory) {
                 path.append(folder);

@@ -138,9 +138,13 @@ public class Commit {
                 return !importantFiles.contains(name) && !f.isHidden() && f.isDirectory();
             }
         });
-
+        for (String fileName : testFiles) {
+            Utils.deleteFile(fileName);
+        }
+        for (String folderName : testFolders) {
+            Utils.deleteDirectory(folderName);
+        }
         for (String key : treeResult.keySet()) {
-            // System.out.println(key + " : " + treeResult.get(key));
             Utils.writeStringToFile(treeResult.get(key), Utils.writeFileToString("Objects/" + key));
         }
     }

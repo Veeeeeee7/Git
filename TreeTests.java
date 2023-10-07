@@ -94,8 +94,11 @@ public class TreeTests {
         tree.remove("6c834d62d7524442cdd32ab209c9b2c083c0a474");
 
         String treeContents = Utils.writeFileToString("Tree");
-        assertEquals(treeContents,
-                "blob : 22343k2jn2njijfinein322i3n3in3i333in3333 : blok.txt\nblob : 1263746536521765436527635421890jvncdeixs : 2i3nkd");
+        assertTrue(Utils.equalContents(treeContents,
+                "blob : 22343k2jn2njijfinein322i3n3in3i333in3333 : blok.txt\nblob : 1263746536521765436527635421890jvncdeixs : 2i3nkd"));
+        // assertEquals(treeContents,
+        // "blob : 22343k2jn2njijfinein322i3n3in3i333in3333 : blok.txt\nblob :
+        // 1263746536521765436527635421890jvncdeixs : 2i3nkd");
     }
 
     @Test
@@ -112,10 +115,14 @@ public class TreeTests {
         assertEquals(Utils.writeFileToString("Objects/" + hash2), "ZAA");
         assertEquals(Utils.writeFileToString("Objects/" + hash3), "YAH");
         assertTrue(Utils.fileExists("Objects/" + hash));
-        assertEquals(Utils.writeFileToString("Objects/" + hash),
+        assertTrue(Utils.equalContents(Utils.writeFileToString("Objects/" + hash),
                 "blob : 581fd1622f7174405f03bea4a099538e7f253671 : ab\n" + //
                         "blob : 43b0b7d9b8f99e369478bda2399f1ac98d124fd4 : cd\n" + //
-                        "blob : 77f721df21a2d0b314694c692fd017d68350fd54 : ef");
+                        "blob : 77f721df21a2d0b314694c692fd017d68350fd54 : ef"));
+        // assertEquals(Utils.writeFileToString("Objects/" + hash),
+        // "blob : 581fd1622f7174405f03bea4a099538e7f253671 : ab\n" + //
+        // "blob : 43b0b7d9b8f99e369478bda2399f1ac98d124fd4 : cd\n" + //
+        // "blob : 77f721df21a2d0b314694c692fd017d68350fd54 : ef");
     }
 
     @Test
@@ -138,11 +145,17 @@ public class TreeTests {
         assertEquals(Utils.writeFileToString("Objects/" + hash4), "DUO");
         assertEquals(Utils.writeFileToString("Objects/" + hash5), "YYY");
         assertTrue(Utils.fileExists("Objects/" + hash));
-        assertEquals(Utils.writeFileToString("Objects/" + hash),
-                "blob : d652148cc8af1881cc6a1b041b14449a24e77d3 : aa\n" + //
+        assertTrue(Utils.equalContents(Utils.writeFileToString("Objects/" + hash),
+                "blob : 0d652148cc8af1881cc6a1b041b14449a24e77d3 : aa\n" + //
                         "blob : 97bdfda29cd652224745a552bc6e2f8cb7ab5d16 : bb\n" + //
                         "blob : d34c0b1d281e4879b11710a91d3d9161f092b5bd : cc\n" + //
                         "tree : 46aeee1299fa4040e341f05a9bc3191d54c55126 : fold1\n" + //
-                        "tree : 1f34cc55024356cec15c25c621fb8eeb2b33c000 : fold2");
+                        "tree : 1f34cc55024356cec15c25c621fb8eeb2b33c000 : fold2"));
+        // assertEquals(Utils.writeFileToString("Objects/" + hash),
+        // "blob : 0d652148cc8af1881cc6a1b041b14449a24e77d3 : aa\n" + //
+        // "blob : 97bdfda29cd652224745a552bc6e2f8cb7ab5d16 : bb\n" + //
+        // "blob : d34c0b1d281e4879b11710a91d3d9161f092b5bd : cc\n" + //
+        // "tree : 46aeee1299fa4040e341f05a9bc3191d54c55126 : fold1\n" + //
+        // "tree : 1f34cc55024356cec15c25c621fb8eeb2b33c000 : fold2");
     }
 }
